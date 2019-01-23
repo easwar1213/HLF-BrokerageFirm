@@ -15,6 +15,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpModule } from '@angular/http';
+import { StorageServiceModule } from 'angular-webstorage-service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { DataService } from './data.service';
@@ -50,6 +51,7 @@ import { ClosureComponent } from './Closure/Closure.component';
   imports: [
     BrowserModule,
     FormsModule,
+    StorageServiceModule,
     ReactiveFormsModule,
     HttpModule,
     AppRoutingModule

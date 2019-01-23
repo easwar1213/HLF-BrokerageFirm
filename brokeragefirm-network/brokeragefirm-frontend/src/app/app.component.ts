@@ -13,6 +13,7 @@
  */
 
 import { Component, AfterViewInit } from '@angular/core';
+import { DataService } from './data.service';
 import $ from 'jquery';
 
 @Component({
@@ -22,6 +23,7 @@ import $ from 'jquery';
 })
 export class AppComponent implements AfterViewInit {
   title = 'app works!';
+  user: any = {};
 
   ngAfterViewInit() {
     $('.nav a').on('click', function(){
@@ -41,4 +43,59 @@ export class AppComponent implements AfterViewInit {
       $(this).parent().parent().addClass('active');
     });
   }
+  
+  constructor(private dataService: DataService<any>) {
+    console.log('Hello login User')
+    this.getUser();
+    this.user = JSON.parse(localStorage.getItem('user'))
+  }
+
+  getUser() {
+    let data: any = {};
+    let user: any = {};
+    let userType;
+    let companyName;
+
+    this.dataService.getSystemUser('ping').subscribe(result => {
+      data = result;
+      console.log("data: ", data)
+      let identity = data.identity.split('.').pop(-1).split('#');
+      let participant = data.participant.split('.').pop(-1).split('#');
+
+      user['id'] = participant[1];
+      user['type'] = participant[0].toLowerCase();
+      user['identity'] = identity[1];
+      userType = participant[0];
+
+      if (userType == 'NetworkAdmin'){
+        user['company'] = user.id.replace(/-/g, ' ');
+      } else {
+        this.dataService.getSingle(userType, user.id).subscribe(resData => {
+          console.log('getRes', resData)
+          if (userType == 'BrokerageFirms'){
+            companyName = resData.brokerageName;
+          }
+          else if (userType == 'Employeers'){
+            companyName = resData.employeerName;
+          } else if (userType == 'Brokers'){
+            companyName = resData.brokerName;         
+          } else {
+            companyName = null;
+          }
+          console.log('companyName', companyName)
+          user['company'] = companyName;
+        })
+      }
+
+      this.dataService.getUserDetail('identities', identity[1]).subscribe(resData => {
+        let userData: any = {};
+        userData = resData;
+        user['name'] = userData.name;
+        console.log("user: ", user)
+        localStorage.removeItem('user');
+        this.dataService.saveInLocal('user', user);
+      })
+    })
+  }
 }
+

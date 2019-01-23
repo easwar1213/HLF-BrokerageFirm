@@ -12,8 +12,9 @@
  * limitations under the License.
  */
 
-import { Injectable } from '@angular/core';
+import { Inject,Injectable } from '@angular/core';
 import { Http, Response, Headers } from '@angular/http';
+import { LOCAL_STORAGE, WebStorageService } from 'angular-webstorage-service';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
@@ -22,10 +23,12 @@ import 'rxjs/add/operator/catch';
 export class DataService<Type> {
     private resolveSuffix = '?resolve=true';
     private actionUrl: string;
+    private systemUrl: string;
     private headers: Headers;
 
-    constructor(private http: Http) {
+    constructor(private http: Http, @Inject(LOCAL_STORAGE) private storage: WebStorageService) {
         this.actionUrl = '/api/';
+        this.systemUrl = '/api/system/';
         this.headers = new Headers();
         this.headers.append('Content-Type', 'application/json');
         this.headers.append('Accept', 'application/json');
@@ -72,6 +75,30 @@ export class DataService<Type> {
         return this.http.delete(this.actionUrl + ns + '/' + id)
           .map(this.extractData)
           .catch(this.handleError);
+    }
+
+    public getSystemUser(ns: string): Observable<Type[]> {
+        console.log('Get ' + ns + ' to ' + this.systemUrl + ns);
+        return this.http.get(this.systemUrl + ns)
+          .map(this.extractData)
+          .catch(this.handleError);
+    }
+
+    public getUserDetail(ns: string, id: string): Observable<Type[]> {
+        console.log('Get ' + ns + ' to ' + this.systemUrl + ns);
+        return this.http.get(this.systemUrl + ns + '/' + id)
+          .map(this.extractData)
+          .catch(this.handleError);
+    }
+
+    public saveInLocal(key, val): void {
+        console.log('Set local key: ' + key);
+        return this.storage.set(key, val);
+    }
+
+    public getFromLocal(key): void {
+        console.log('Get local key: ' + key);
+        return this.storage.get(key);
     }
 
     private handleError(error: any): Observable<string> {
