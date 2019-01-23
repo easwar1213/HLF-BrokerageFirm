@@ -15,57 +15,65 @@
 /**
  * Sample access control list.
  */
-rule ReadUpdateBrokerageFirm {
-    description: "Allow to Brokerage Firms Read and Update Informations"
+rule BrokerageFirmReadUpdateThemselves {
+    description: "Allow Brokerage Firm Read and Update Themselves"
     participant(p): "org.example.brokeragefirmnetwork.BrokerageFirms"
     operation: READ,UPDATE
     resource(r): "org.example.brokeragefirmnetwork.BrokerageFirms"
-    condition: (r.brokerageID.getIdentifier() === p.getIdentifier())
+    condition: (r.getIdentifier() === p.getIdentifier())
     action: ALLOW
 }
 
-rule ReadUpdateDelLicenseBrokers {
-    description: "Allow Brokerage Firms to do all operations in License Brokers"
+rule BrokerageFirmCreateReadUpdateDelLicenseBrokers {
+    description: "Allow Brokerage Firm Create,Read,Update and Delete License Brokers"
     participant(p): "org.example.brokeragefirmnetwork.BrokerageFirms"
     operation: ALL
     resource(r): "org.example.brokeragefirmnetwork.LicenseBrokers"
-    condition: (r.brokerageID.getIdentifier() === p.getIdentifier())
+    condition: (r.brokerageId.getIdentifier() === p.getIdentifier())
     action: ALLOW
 }
 
-rule ReadUpdateDelEmployeers {
-    description: "Allow Brokerage Firms to do all operations in Employeers"
+rule BrokerageFirmCreateReadUpdateDelEmployeers {
+    description: "Allow Brokerage Firm Create,Read,Update and Delete Employeers"
     participant(p): "org.example.brokeragefirmnetwork.BrokerageFirms"
     operation: ALL
     resource(r): "org.example.brokeragefirmnetwork.Employeers"
-    condition: (r.brokerageID.getIdentifier() === p.getIdentifier())
+    condition: (r.brokerageId.getIdentifier() === p.getIdentifier())
     action: ALLOW
 }
 
-rule ReadEmployeers {
-    description: "Allow License Broker only perform Read operations of Employeers"
-    participant(p): "org.example.brokeragefirmnetwork.BrokerageFirms"
-    operation: READ
-    resource(r): "org.example.brokeragefirmnetwork.Employeers"
-    condition: (r.brokerageID.getIdentifier() === p.getIdentifier())
-    action: ALLOW
-}
-
-rule ReadUpdateDelOppurtunityWON {
-    description: "Allow Brokerage Firms to do all operations in OppurtunityWon Asset"
+rule BrokerageFirmCreateReadUpdateDelOppurtunityWON {
+    description: "Allow Brokerage Firm Create,Read,Update andf Delete OppurtunityWON asset"
     participant(p): "org.example.brokeragefirmnetwork.BrokerageFirms"
     operation: ALL
     resource(r): "org.example.brokeragefirmnetwork.OpportunityWon"
-    condition: (r.owner.getIdentifier() === p.getIdentifier())
+    condition: (r.brokerageId.getIdentifier() === p.getIdentifier())
     action: ALLOW
 }
 
-rule ReadUpdateOppurtunityWON {
-    description: "Allow License Broker only perform Read and Update operations in OppurtunityWon Asset"
+rule LicenseBrokersReadUpdateThemselves {
+    description: "Allow License Brokers Read and Update Themselves"
     participant(p): "org.example.brokeragefirmnetwork.LicenseBrokers"
-    operation: ALL
-    resource(r): "org.example.brokeragefirmnetwork.OpportunityWon"
-    condition: (r.owner.getIdentifier() === p.getIdentifier())
+    operation: READ,UPDATE
+    resource(r): "org.example.brokeragefirmnetwork.LicenseBrokers"
+    condition: (r.getIdentifier() === p.getIdentifier())
+    action: ALLOW
+}
+
+rule LicenseBrokersReadUpdateOppurtunityWON {
+    description: "Allow License Brokers Read and Update OppurtunityWON asset"
+    participant: "org.example.brokeragefirmnetwork.LicenseBrokers"
+    operation: READ,UPDATE
+    resource: "org.example.brokeragefirmnetwork.OpportunityWon"    
+    action: ALLOW
+}
+
+rule EmployeersReadUpdateThemselves {
+    description: "Allow Employeers Read and Update Themselves"
+    participant(p): "org.example.brokeragefirmnetwork.Employeers"
+    operation: READ,UPDATE
+    resource(r): "org.example.brokeragefirmnetwork.Employeers"
+    condition: (r.getIdentifier() === p.getIdentifier())
     action: ALLOW
 }
 
@@ -92,3 +100,4 @@ rule NetworkAdminSystem {
     resource: "org.hyperledger.composer.system.**"
     action: ALLOW
 }
+

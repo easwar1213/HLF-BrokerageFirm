@@ -28,21 +28,21 @@ import {Event} from './org.hyperledger.composer.system';
       brokerageId: string;
       brokerageName: string;
       brokerageLicenseNo: string;
-      brokerageCommunicationDetails: CommunicationDetails;
+      brokerageCommunicationDetails: string;
       brokerageStatus: ParticipantStatus;
    }
    export class LicenseBrokers extends BrokerageFirms {
       brokerId: string;
       brokerName: string;
       brokerLicenseNo: string;
-      brokerCommunicationDetails: CommunicationDetails;
+      brokerCommunicationDetails: string;
       brokerStatus: ParticipantStatus;
    }
    export class Employeers extends BrokerageFirms {
       employeerId: string;
       employeerName: string;
       employeerLicenseNo: string;
-      employerCommunicationDetails: CommunicationDetails;
+      employerCommunicationDetails: string;
       employeerStatus: ParticipantStatus;
    }
    export class OpportunityWon extends Asset {

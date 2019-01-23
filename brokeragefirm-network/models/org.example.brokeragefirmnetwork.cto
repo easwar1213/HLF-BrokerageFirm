@@ -52,7 +52,7 @@ participant BrokerageFirms identified by brokerageId {
   o String brokerageId
   o String brokerageName
   o String brokerageLicenseNo
-  o CommunicationDetails brokerageCommunicationDetails
+  o String brokerageCommunicationDetails
   o ParticipantStatus brokerageStatus default="ACTIVE"
 }
 
@@ -60,7 +60,7 @@ participant LicenseBrokers identified by brokerId extends BrokerageFirms{
   o String brokerId
   o String brokerName
   o String brokerLicenseNo
-  o CommunicationDetails brokerCommunicationDetails
+  o String brokerCommunicationDetails
   o ParticipantStatus brokerStatus default="ACTIVE"
 }
 
@@ -68,7 +68,7 @@ participant Employeers identified by employeerId extends BrokerageFirms{
   o String employeerId
   o String employeerName
   o String employeerLicenseNo
-  o CommunicationDetails employerCommunicationDetails
+  o String employerCommunicationDetails
   o ParticipantStatus employeerStatus default="ACTIVE"
 }
 
