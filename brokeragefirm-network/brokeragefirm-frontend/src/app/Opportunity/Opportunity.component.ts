@@ -14,34 +14,38 @@
 
 import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
-import { SampleParticipantService } from './SampleParticipant.service';
+import { OpportunityService } from './Opportunity.service';
 import 'rxjs/add/operator/toPromise';
 
 @Component({
-  selector: 'app-sampleparticipant',
-  templateUrl: './SampleParticipant.component.html',
-  styleUrls: ['./SampleParticipant.component.css'],
-  providers: [SampleParticipantService]
+  selector: 'app-opportunity',
+  templateUrl: './Opportunity.component.html',
+  styleUrls: ['./Opportunity.component.css'],
+  providers: [OpportunityService]
 })
-export class SampleParticipantComponent implements OnInit {
+export class OpportunityComponent implements OnInit {
 
   myForm: FormGroup;
 
-  private allParticipants;
-  private participant;
+  private allTransactions;
+  private Transaction;
   private currentId;
   private errorMessage;
 
-  participantId = new FormControl('', Validators.required);
-  firstName = new FormControl('', Validators.required);
-  lastName = new FormControl('', Validators.required);
+  opportunityId = new FormControl('', Validators.required);
+  Description = new FormControl('', Validators.required);
+  oppurtunityStatus = new FormControl('', Validators.required);
+  transactionId = new FormControl('', Validators.required);
+  timestamp = new FormControl('', Validators.required);
 
 
-  constructor(public serviceSampleParticipant: SampleParticipantService, fb: FormBuilder) {
+  constructor(private serviceOpportunity: OpportunityService, fb: FormBuilder) {
     this.myForm = fb.group({
-      participantId: this.participantId,
-      firstName: this.firstName,
-      lastName: this.lastName
+      opportunityId: this.opportunityId,
+      Description: this.Description,
+      oppurtunityStatus: this.oppurtunityStatus,
+      transactionId: this.transactionId,
+      timestamp: this.timestamp
     });
   };
 
@@ -51,20 +55,21 @@ export class SampleParticipantComponent implements OnInit {
 
   loadAll(): Promise<any> {
     const tempList = [];
-    return this.serviceSampleParticipant.getAll()
+    return this.serviceOpportunity.getAll()
     .toPromise()
     .then((result) => {
       this.errorMessage = null;
-      result.forEach(participant => {
-        tempList.push(participant);
+      result.forEach(transaction => {
+        tempList.push(transaction);
       });
-      this.allParticipants = tempList;
+      this.allTransactions = tempList;
     })
     .catch((error) => {
       if (error === 'Server error') {
         this.errorMessage = 'Could not connect to REST server. Please check your configuration details';
       } else if (error === '404 - Not Found') {
         this.errorMessage = '404 - Could not find API route. Please check your available APIs.';
+      } else {
         this.errorMessage = error;
       }
     });
@@ -72,7 +77,7 @@ export class SampleParticipantComponent implements OnInit {
 
 	/**
    * Event handler for changing the checked state of a checkbox (handles array enumeration values)
-   * @param {String} name - the name of the participant field to update
+   * @param {String} name - the name of the transaction field to update
    * @param {any} value - the enumeration value for which to toggle the checked state
    */
   changeArrayValue(name: string, value: any): void {
@@ -86,39 +91,44 @@ export class SampleParticipantComponent implements OnInit {
 
 	/**
 	 * Checkbox helper, determining whether an enumeration value should be selected or not (for array enumeration values
-   * only). This is used for checkboxes in the participant updateDialog.
-   * @param {String} name - the name of the participant field to check
+   * only). This is used for checkboxes in the transaction updateDialog.
+   * @param {String} name - the name of the transaction field to check
    * @param {any} value - the enumeration value to check for
-   * @return {Boolean} whether the specified participant field contains the provided value
+   * @return {Boolean} whether the specified transaction field contains the provided value
    */
   hasArrayValue(name: string, value: any): boolean {
     return this[name].value.indexOf(value) !== -1;
   }
 
-  addParticipant(form: any): Promise<any> {
-    this.participant = {
-      $class: 'org.example.brokeragefirmnetwork.SampleParticipant',
-      'participantId': this.participantId.value,
-      'firstName': this.firstName.value,
-      'lastName': this.lastName.value
+  addTransaction(form: any): Promise<any> {
+    this.Transaction = {
+      $class: 'org.example.brokeragefirmnetwork.Opportunity',
+      'opportunityId': this.opportunityId.value,
+      'Description': this.Description.value,
+      'oppurtunityStatus': this.oppurtunityStatus.value,
+      'transactionId': this.transactionId.value,
+      'timestamp': this.timestamp.value
     };
 
     this.myForm.setValue({
-      'participantId': null,
-      'firstName': null,
-      'lastName': null
+      'opportunityId': null,
+      'Description': null,
+      'oppurtunityStatus': null,
+      'transactionId': null,
+      'timestamp': null
     });
 
-    return this.serviceSampleParticipant.addParticipant(this.participant)
+    return this.serviceOpportunity.addTransaction(this.Transaction)
     .toPromise()
     .then(() => {
       this.errorMessage = null;
       this.myForm.setValue({
-        'participantId': null,
-        'firstName': null,
-        'lastName': null
+        'opportunityId': null,
+        'Description': null,
+        'oppurtunityStatus': null,
+        'transactionId': null,
+        'timestamp': null
       });
-      this.loadAll(); 
     })
     .catch((error) => {
       if (error === 'Server error') {
@@ -129,39 +139,37 @@ export class SampleParticipantComponent implements OnInit {
     });
   }
 
-
-   updateParticipant(form: any): Promise<any> {
-    this.participant = {
-      $class: 'org.example.brokeragefirmnetwork.SampleParticipant',
-      'firstName': this.firstName.value,
-      'lastName': this.lastName.value
+  updateTransaction(form: any): Promise<any> {
+    this.Transaction = {
+      $class: 'org.example.brokeragefirmnetwork.Opportunity',
+      'opportunityId': this.opportunityId.value,
+      'Description': this.Description.value,
+      'oppurtunityStatus': this.oppurtunityStatus.value,
+      'timestamp': this.timestamp.value
     };
 
-    return this.serviceSampleParticipant.updateParticipant(form.get('participantId').value, this.participant)
+    return this.serviceOpportunity.updateTransaction(form.get('transactionId').value, this.Transaction)
     .toPromise()
     .then(() => {
       this.errorMessage = null;
-      this.loadAll();
     })
     .catch((error) => {
       if (error === 'Server error') {
         this.errorMessage = 'Could not connect to REST server. Please check your configuration details';
       } else if (error === '404 - Not Found') {
-        this.errorMessage = '404 - Could not find API route. Please check your available APIs.';
+      this.errorMessage = '404 - Could not find API route. Please check your available APIs.';
       } else {
         this.errorMessage = error;
       }
     });
   }
 
+  deleteTransaction(): Promise<any> {
 
-  deleteParticipant(): Promise<any> {
-
-    return this.serviceSampleParticipant.deleteParticipant(this.currentId)
+    return this.serviceOpportunity.deleteTransaction(this.currentId)
     .toPromise()
     .then(() => {
       this.errorMessage = null;
-      this.loadAll();
     })
     .catch((error) => {
       if (error === 'Server error') {
@@ -180,53 +188,69 @@ export class SampleParticipantComponent implements OnInit {
 
   getForm(id: any): Promise<any> {
 
-    return this.serviceSampleParticipant.getparticipant(id)
+    return this.serviceOpportunity.getTransaction(id)
     .toPromise()
     .then((result) => {
       this.errorMessage = null;
       const formObject = {
-        'participantId': null,
-        'firstName': null,
-        'lastName': null
+        'opportunityId': null,
+        'Description': null,
+        'oppurtunityStatus': null,
+        'transactionId': null,
+        'timestamp': null
       };
 
-      if (result.participantId) {
-        formObject.participantId = result.participantId;
+      if (result.opportunityId) {
+        formObject.opportunityId = result.opportunityId;
       } else {
-        formObject.participantId = null;
+        formObject.opportunityId = null;
       }
 
-      if (result.firstName) {
-        formObject.firstName = result.firstName;
+      if (result.Description) {
+        formObject.Description = result.Description;
       } else {
-        formObject.firstName = null;
+        formObject.Description = null;
       }
 
-      if (result.lastName) {
-        formObject.lastName = result.lastName;
+      if (result.oppurtunityStatus) {
+        formObject.oppurtunityStatus = result.oppurtunityStatus;
       } else {
-        formObject.lastName = null;
+        formObject.oppurtunityStatus = null;
+      }
+
+      if (result.transactionId) {
+        formObject.transactionId = result.transactionId;
+      } else {
+        formObject.transactionId = null;
+      }
+
+      if (result.timestamp) {
+        formObject.timestamp = result.timestamp;
+      } else {
+        formObject.timestamp = null;
       }
 
       this.myForm.setValue(formObject);
+
     })
     .catch((error) => {
       if (error === 'Server error') {
         this.errorMessage = 'Could not connect to REST server. Please check your configuration details';
       } else if (error === '404 - Not Found') {
-        this.errorMessage = '404 - Could not find API route. Please check your available APIs.';
+      this.errorMessage = '404 - Could not find API route. Please check your available APIs.';
       } else {
         this.errorMessage = error;
       }
     });
-
   }
 
   resetForm(): void {
     this.myForm.setValue({
-      'participantId': null,
-      'firstName': null,
-      'lastName': null
+      'opportunityId': null,
+      'Description': null,
+      'oppurtunityStatus': null,
+      'transactionId': null,
+      'timestamp': null
     });
   }
 }

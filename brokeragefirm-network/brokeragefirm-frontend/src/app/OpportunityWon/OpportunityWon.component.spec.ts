@@ -21,25 +21,25 @@ import { HttpModule } from '@angular/http';
 import { FormsModule, ReactiveFormsModule, FormGroup, FormControl } from '@angular/forms';
 import * as sinon from 'sinon';
 import { DataService } from '../data.service';
-import { SampleParticipantComponent } from './SampleParticipant.component';
-import { SampleParticipantService } from './SampleParticipant.service';
-import { Observable } from 'rxjs';
+import { OpportunityWonComponent } from './OpportunityWon.component';
+import { OpportunityWonService } from './OpportunityWon.service';
+import { Observable } from 'rxjs'
 
-describe('SampleParticipantComponent', () => {
-  let component: SampleParticipantComponent;
-  let fixture: ComponentFixture<SampleParticipantComponent>;
+describe('OpportunityWonComponent', () => {
+  let component: OpportunityWonComponent;
+  let fixture: ComponentFixture<OpportunityWonComponent>;
 
-  let mockSampleParticipantService;
+  let mockOpportunityWonService;
   let mockDataService
 
   beforeEach(async(() => {
 
-    mockSampleParticipantService = sinon.createStubInstance(SampleParticipantService);
-    mockSampleParticipantService.getAll.returns([]);
+    mockOpportunityWonService = sinon.createStubInstance(OpportunityWonService);
+    mockOpportunityWonService.getAll.returns([]);
     mockDataService = sinon.createStubInstance(DataService);
 
     TestBed.configureTestingModule({
-      declarations: [ SampleParticipantComponent ],
+      declarations: [ OpportunityWonComponent ],
       imports: [
         BrowserModule,
         FormsModule,
@@ -47,12 +47,12 @@ describe('SampleParticipantComponent', () => {
         HttpModule
       ],
       providers: [
-        {provide: SampleParticipantService, useValue: mockSampleParticipantService },
+        {provide: OpportunityWonService, useValue: mockOpportunityWonService },
         {provide: DataService, useValue: mockDataService },
       ]
     });
 
-    fixture = TestBed.createComponent(SampleParticipantComponent);
+    fixture = TestBed.createComponent(OpportunityWonComponent);
     component = fixture.componentInstance;
 
   }));
@@ -61,35 +61,35 @@ describe('SampleParticipantComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should update the table when a SampleParticipant is added', fakeAsync(() => {
+  it('should update the table when a OpportunityWon is added', fakeAsync(() => {
     let loadAllSpy = sinon.stub(component, 'loadAll');
-    sinon.stub(component.serviceSampleParticipant, 'addParticipant').returns(new Observable(observer => {
+    sinon.stub(component.serviceOpportunityWon, 'addAsset').returns(new Observable<any>(observer => {
       observer.next('');
       observer.complete();
     }));
 
-    component.addParticipant({});
+    component.addAsset({});
 
     tick();
-
+    
     expect(loadAllSpy.callCount).toBe(1);
 
     loadAllSpy.restore();
   }));
 
-  it('should update the table when a SampleParticipant is updated', fakeAsync(() => {
+  it('should update the table when a OpportunityWon is updated', fakeAsync(() => {
     let loadAllSpy = sinon.stub(component, 'loadAll');
-    sinon.stub(component.serviceSampleParticipant, 'updateParticipant').returns(new Observable(observer => {
+    sinon.stub(component.serviceOpportunityWon, 'updateAsset').returns(new Observable<any>(observer => {
       observer.next('');
       observer.complete();
     }));
 
     // mock form to be passed to the update function
     let mockForm = new FormGroup({
-      participantId: new FormControl('id')
+      opportunityId: new FormControl('id')
     });
-    
-    component.updateParticipant(mockForm);
+
+    component.updateAsset(mockForm);
 
     tick();
 
@@ -97,21 +97,23 @@ describe('SampleParticipantComponent', () => {
 
     loadAllSpy.restore();
   }));
-  
-  it('should update the table when a SampleParticipant is deleted', fakeAsync(() => {
+
+  it('should update the table when a OpportunityWon is deleted', fakeAsync(() => {
     let loadAllSpy = sinon.stub(component, 'loadAll');
-    sinon.stub(component.serviceSampleParticipant, 'deleteParticipant').returns(new Observable(observer => {
+    sinon.stub(component.serviceOpportunityWon, 'deleteAsset').returns(new Observable<any>(observer => {
       observer.next('');
       observer.complete();
     }));
 
-    component.deleteParticipant();
+    component.setId('id');
+    
+    component.deleteAsset();
 
     tick();
 
     expect(loadAllSpy.callCount).toBe(1);
 
     loadAllSpy.restore();
-  }));
+  }));  
 
 });

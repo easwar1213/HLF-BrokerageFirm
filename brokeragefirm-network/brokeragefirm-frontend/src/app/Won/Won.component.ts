@@ -14,16 +14,16 @@
 
 import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
-import { SampleTransactionService } from './SampleTransaction.service';
+import { WonService } from './Won.service';
 import 'rxjs/add/operator/toPromise';
 
 @Component({
-  selector: 'app-sampletransaction',
-  templateUrl: './SampleTransaction.component.html',
-  styleUrls: ['./SampleTransaction.component.css'],
-  providers: [SampleTransactionService]
+  selector: 'app-won',
+  templateUrl: './Won.component.html',
+  styleUrls: ['./Won.component.css'],
+  providers: [WonService]
 })
-export class SampleTransactionComponent implements OnInit {
+export class WonComponent implements OnInit {
 
   myForm: FormGroup;
 
@@ -32,16 +32,18 @@ export class SampleTransactionComponent implements OnInit {
   private currentId;
   private errorMessage;
 
-  asset = new FormControl('', Validators.required);
-  newValue = new FormControl('', Validators.required);
+  opportunityId = new FormControl('', Validators.required);
+  Description = new FormControl('', Validators.required);
+  oppurtunityStatus = new FormControl('', Validators.required);
   transactionId = new FormControl('', Validators.required);
   timestamp = new FormControl('', Validators.required);
 
 
-  constructor(private serviceSampleTransaction: SampleTransactionService, fb: FormBuilder) {
+  constructor(private serviceWon: WonService, fb: FormBuilder) {
     this.myForm = fb.group({
-      asset: this.asset,
-      newValue: this.newValue,
+      opportunityId: this.opportunityId,
+      Description: this.Description,
+      oppurtunityStatus: this.oppurtunityStatus,
       transactionId: this.transactionId,
       timestamp: this.timestamp
     });
@@ -53,7 +55,7 @@ export class SampleTransactionComponent implements OnInit {
 
   loadAll(): Promise<any> {
     const tempList = [];
-    return this.serviceSampleTransaction.getAll()
+    return this.serviceWon.getAll()
     .toPromise()
     .then((result) => {
       this.errorMessage = null;
@@ -100,27 +102,30 @@ export class SampleTransactionComponent implements OnInit {
 
   addTransaction(form: any): Promise<any> {
     this.Transaction = {
-      $class: 'org.example.brokeragefirmnetwork.SampleTransaction',
-      'asset': this.asset.value,
-      'newValue': this.newValue.value,
+      $class: 'org.example.brokeragefirmnetwork.Won',
+      'opportunityId': this.opportunityId.value,
+      'Description': this.Description.value,
+      'oppurtunityStatus': this.oppurtunityStatus.value,
       'transactionId': this.transactionId.value,
       'timestamp': this.timestamp.value
     };
 
     this.myForm.setValue({
-      'asset': null,
-      'newValue': null,
+      'opportunityId': null,
+      'Description': null,
+      'oppurtunityStatus': null,
       'transactionId': null,
       'timestamp': null
     });
 
-    return this.serviceSampleTransaction.addTransaction(this.Transaction)
+    return this.serviceWon.addTransaction(this.Transaction)
     .toPromise()
     .then(() => {
       this.errorMessage = null;
       this.myForm.setValue({
-        'asset': null,
-        'newValue': null,
+        'opportunityId': null,
+        'Description': null,
+        'oppurtunityStatus': null,
         'transactionId': null,
         'timestamp': null
       });
@@ -136,13 +141,14 @@ export class SampleTransactionComponent implements OnInit {
 
   updateTransaction(form: any): Promise<any> {
     this.Transaction = {
-      $class: 'org.example.brokeragefirmnetwork.SampleTransaction',
-      'asset': this.asset.value,
-      'newValue': this.newValue.value,
+      $class: 'org.example.brokeragefirmnetwork.Won',
+      'opportunityId': this.opportunityId.value,
+      'Description': this.Description.value,
+      'oppurtunityStatus': this.oppurtunityStatus.value,
       'timestamp': this.timestamp.value
     };
 
-    return this.serviceSampleTransaction.updateTransaction(form.get('transactionId').value, this.Transaction)
+    return this.serviceWon.updateTransaction(form.get('transactionId').value, this.Transaction)
     .toPromise()
     .then(() => {
       this.errorMessage = null;
@@ -160,7 +166,7 @@ export class SampleTransactionComponent implements OnInit {
 
   deleteTransaction(): Promise<any> {
 
-    return this.serviceSampleTransaction.deleteTransaction(this.currentId)
+    return this.serviceWon.deleteTransaction(this.currentId)
     .toPromise()
     .then(() => {
       this.errorMessage = null;
@@ -182,27 +188,34 @@ export class SampleTransactionComponent implements OnInit {
 
   getForm(id: any): Promise<any> {
 
-    return this.serviceSampleTransaction.getTransaction(id)
+    return this.serviceWon.getTransaction(id)
     .toPromise()
     .then((result) => {
       this.errorMessage = null;
       const formObject = {
-        'asset': null,
-        'newValue': null,
+        'opportunityId': null,
+        'Description': null,
+        'oppurtunityStatus': null,
         'transactionId': null,
         'timestamp': null
       };
 
-      if (result.asset) {
-        formObject.asset = result.asset;
+      if (result.opportunityId) {
+        formObject.opportunityId = result.opportunityId;
       } else {
-        formObject.asset = null;
+        formObject.opportunityId = null;
       }
 
-      if (result.newValue) {
-        formObject.newValue = result.newValue;
+      if (result.Description) {
+        formObject.Description = result.Description;
       } else {
-        formObject.newValue = null;
+        formObject.Description = null;
+      }
+
+      if (result.oppurtunityStatus) {
+        formObject.oppurtunityStatus = result.oppurtunityStatus;
+      } else {
+        formObject.oppurtunityStatus = null;
       }
 
       if (result.transactionId) {
@@ -233,8 +246,9 @@ export class SampleTransactionComponent implements OnInit {
 
   resetForm(): void {
     this.myForm.setValue({
-      'asset': null,
-      'newValue': null,
+      'opportunityId': null,
+      'Description': null,
+      'oppurtunityStatus': null,
       'transactionId': null,
       'timestamp': null
     });

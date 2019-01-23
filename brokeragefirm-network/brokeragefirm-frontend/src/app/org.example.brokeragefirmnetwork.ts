@@ -3,23 +3,117 @@ import {Participant} from './org.hyperledger.composer.system';
 import {Transaction} from './org.hyperledger.composer.system';
 import {Event} from './org.hyperledger.composer.system';
 // export namespace org.example.brokeragefirmnetwork{
-   export class SampleParticipant extends Participant {
-      participantId: string;
-      firstName: string;
-      lastName: string;
+   export enum ParticipantStatus {
+      ACTIVE,
+      NON_ACTIVE,
    }
-   export class SampleAsset extends Asset {
-      assetId: string;
-      owner: SampleParticipant;
-      value: string;
+   export enum OppurtunityStatus {
+      LEAD,
+      OPPURTUNITY,
+      OPPURTUNITY_WIP,
+      OPPURTUNITY_WON,
+      OPPURTUNITY_CLOSURE,
    }
-   export class SampleTransaction extends Transaction {
-      asset: SampleAsset;
-      newValue: string;
+   export class CommunicationDetails {
+      address: string;
+      city: string;
+      state: string;
+      country: string;
+      zipCode: string;
+      email: string;
+      fax: string;
+      contactNumber: string;
    }
-   export class SampleEvent extends Event {
-      asset: SampleAsset;
-      oldValue: string;
-      newValue: string;
+   export class BrokerageFirms extends Participant {
+      brokerageId: string;
+      brokerageName: string;
+      brokerageLicenseNo: string;
+      brokerageCommunicationDetails: string;
+      brokerageStatus: ParticipantStatus;
+   }
+   export class LicenseBrokers extends BrokerageFirms {
+      brokerId: string;
+      brokerName: string;
+      brokerLicenseNo: string;
+      brokerCommunicationDetails: string;
+      brokerStatus: ParticipantStatus;
+   }
+   export class Employeers extends BrokerageFirms {
+      employeerId: string;
+      employeerName: string;
+      employeerLicenseNo: string;
+      employerCommunicationDetails: string;
+      employeerStatus: ParticipantStatus;
+   }
+   export class OpportunityWon extends Asset {
+      opportunityId: string;
+      brokerageId: BrokerageFirms;
+      brokerageName: BrokerageFirms;
+      description: string;
+      brokerID: LicenseBrokers;
+      brokerName: LicenseBrokers;
+      employeerId: Employeers;
+      employeerName: Employeers;
+      oppurtunityStatus: OppurtunityStatus;
+   }
+   export class CreateLead extends Transaction {
+      opportunityId: string;
+      brokerageId: BrokerageFirms;
+      Description: string;
+      brokerID: LicenseBrokers;
+      brokerName: LicenseBrokers;
+      employeerId: Employeers;
+      employeerName: Employeers;
+      oppurtunityStatus: OppurtunityStatus;
+   }
+   export class LeadCreate extends Event {
+      opportunityId: string;
+      brokerageId: BrokerageFirms;
+      Description: string;
+      brokerID: LicenseBrokers;
+      brokerName: LicenseBrokers;
+      employeerId: Employeers;
+      employeerName: Employeers;
+      oppurtunityStatus: OppurtunityStatus;
+   }
+   export class Opportunity extends Transaction {
+      opportunityId: string;
+      Description: string;
+      oppurtunityStatus: OppurtunityStatus;
+   }
+   export class UpdateOpp extends Event {
+      opportunityId: string;
+      Description: string;
+      oppurtunityStatus: OppurtunityStatus;
+   }
+   export class OpportunityWIP extends Transaction {
+      opportunityId: string;
+      Description: string;
+      oppurtunityStatus: OppurtunityStatus;
+   }
+   export class UpdateOppWIP extends Event {
+      opportunityId: string;
+      Description: string;
+      oppurtunityStatus: OppurtunityStatus;
+   }
+   export class Won extends Transaction {
+      opportunityId: string;
+      Description: string;
+      oppurtunityStatus: OppurtunityStatus;
+   }
+   export class UpdateOppWon extends Event {
+      opportunityId: string;
+      Description: string;
+      oppurtunityStatus: OppurtunityStatus;
+   }
+   export class Closure extends Transaction {
+      opportunityId: string;
+      Description: string;
+      oppurtunityStatus: OppurtunityStatus;
+   }
+   export class UpdateOppClosure extends Event {
+      opportunityId: string;
+      Description: string;
+      oppurtunityStatus: OppurtunityStatus;
    }
 // }

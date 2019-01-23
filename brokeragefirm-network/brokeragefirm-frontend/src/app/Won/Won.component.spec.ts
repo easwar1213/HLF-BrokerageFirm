@@ -21,24 +21,24 @@ import { HttpModule } from '@angular/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import * as sinon from 'sinon';
 import { DataService } from '../data.service';
-import { SampleTransactionComponent } from './SampleTransaction.component';
-import {SampleTransactionService} from './SampleTransaction.service';
+import { WonComponent } from './Won.component';
+import {WonService} from './Won.service';
 
-describe('SampleTransactionComponent', () => {
-  let component: SampleTransactionComponent;
-  let fixture: ComponentFixture<SampleTransactionComponent>;
+describe('WonComponent', () => {
+  let component: WonComponent;
+  let fixture: ComponentFixture<WonComponent>;
 
-  let mockSampleTransactionService;
+  let mockWonService;
   let mockDataService
 
   beforeEach(async(() => {
 
-    mockSampleTransactionService = sinon.createStubInstance(SampleTransactionService);
-    mockSampleTransactionService.getAll.returns([]);
+    mockWonService = sinon.createStubInstance(WonService);
+    mockWonService.getAll.returns([]);
     mockDataService = sinon.createStubInstance(DataService);
 
     TestBed.configureTestingModule({
-      declarations: [ SampleTransactionComponent ],
+      declarations: [ WonComponent ],
       imports: [
         BrowserModule,
         FormsModule,
@@ -46,12 +46,12 @@ describe('SampleTransactionComponent', () => {
         HttpModule
       ],
       providers: [
-        {provide: SampleTransactionService, useValue: mockSampleTransactionService },
+        {provide: WonService, useValue: mockWonService },
         {provide: DataService, useValue: mockDataService },
       ]
     });
 
-    fixture = TestBed.createComponent(SampleTransactionComponent);
+    fixture = TestBed.createComponent(WonComponent);
     component = fixture.componentInstance;
 
   }));

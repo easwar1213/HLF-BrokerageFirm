@@ -18,25 +18,141 @@
 
 namespace org.example.brokeragefirmnetwork
 
-participant SampleParticipant identified by participantId {
-  o String participantId
-  o String firstName
-  o String lastName
+//Declaration Section
+
+//enums
+enum ParticipantStatus {
+  o ACTIVE
+  o NON_ACTIVE
 }
 
-asset SampleAsset identified by assetId {
-  o String assetId
-  --> SampleParticipant owner
-  o String value
+enum OppurtunityStatus {
+  o LEAD
+  o OPPURTUNITY
+  o OPPURTUNITY_WIP
+  o OPPURTUNITY_WON
+  o OPPURTUNITY_CLOSURE
 }
 
-transaction SampleTransaction {
-  --> SampleAsset asset
-  o String newValue
+
+// Concepts
+concept CommunicationDetails {
+  o String address 
+  o String city
+  o String state
+  o String country
+  o String zipCode 
+  o String email 
+  o String fax optional
+  o String contactNumber 
 }
 
-event SampleEvent {
-  --> SampleAsset asset
-  o String oldValue
-  o String newValue
+//Participants
+participant BrokerageFirms identified by brokerageId {
+  o String brokerageId
+  o String brokerageName
+  o String brokerageLicenseNo
+  o String brokerageCommunicationDetails
+  o ParticipantStatus brokerageStatus default="ACTIVE"
+}
+
+participant LicenseBrokers identified by brokerId extends BrokerageFirms{
+  o String brokerId
+  o String brokerName
+  o String brokerLicenseNo
+  o String brokerCommunicationDetails
+  o ParticipantStatus brokerStatus default="ACTIVE"
+}
+
+participant Employeers identified by employeerId extends BrokerageFirms{
+  o String employeerId
+  o String employeerName
+  o String employeerLicenseNo
+  o String employerCommunicationDetails
+  o ParticipantStatus employeerStatus default="ACTIVE"
+}
+
+//Assets
+asset OpportunityWon identified by opportunityId {
+  o String opportunityId    
+  --> BrokerageFirms brokerageId
+  --> BrokerageFirms brokerageName
+  o String description
+  --> LicenseBrokers brokerID
+  --> LicenseBrokers brokerName
+  --> Employeers employeerId
+  --> Employeers employeerName
+  o OppurtunityStatus oppurtunityStatus default="LEAD"
+}
+
+//Transactions and Events
+
+transaction CreateLead {
+  o String opportunityId    
+  --> BrokerageFirms brokerageId
+  o String Description
+  --> LicenseBrokers brokerID
+  --> LicenseBrokers brokerName
+  --> Employeers employeerId
+  --> Employeers employeerName
+  o OppurtunityStatus oppurtunityStatus default="LEAD"
+}
+
+event LeadCreate {
+  o String opportunityId    
+  --> BrokerageFirms brokerageId
+  o String Description
+  --> LicenseBrokers brokerID
+  --> LicenseBrokers brokerName
+  --> Employeers employeerId
+  --> Employeers employeerName
+  o OppurtunityStatus oppurtunityStatus default="LEAD"
+}
+
+transaction Opportunity {
+  o String opportunityId  
+  o String Description
+  o OppurtunityStatus oppurtunityStatus default="OPPURTUNITY"
+}
+
+event UpdateOpp {
+  o String opportunityId  
+  o String Description
+  o OppurtunityStatus oppurtunityStatus default="OPPURTUNITY"
+}
+
+transaction OpportunityWIP {
+  o String opportunityId  
+  o String Description
+  o OppurtunityStatus oppurtunityStatus default="OPPURTUNITY_WIP"
+}
+
+event UpdateOppWIP {
+  o String opportunityId  
+  o String Description
+  o OppurtunityStatus oppurtunityStatus default="OPPURTUNITY_WIP"
+}
+
+transaction Won {
+  o String opportunityId  
+  o String Description
+  o OppurtunityStatus oppurtunityStatus default="OPPURTUNITY_WON"
+}
+
+event UpdateOppWon {
+  o String opportunityId  
+  o String Description
+  o OppurtunityStatus oppurtunityStatus default="OPPURTUNITY_WON"
+}
+
+transaction Closure {
+  o String opportunityId  
+  o String Description
+  o OppurtunityStatus oppurtunityStatus default="OPPURTUNITY_CLOSURE"
+}
+
+event UpdateOppClosure {
+  o String opportunityId  
+  o String Description
+  o OppurtunityStatus oppurtunityStatus default="OPPURTUNITY_CLOSURE"
 }

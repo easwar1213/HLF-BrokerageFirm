@@ -15,36 +15,37 @@
 import { Injectable } from '@angular/core';
 import { DataService } from '../data.service';
 import { Observable } from 'rxjs/Observable';
-import { SampleAsset } from '../org.example.brokeragefirmnetwork';
+import { Closure } from '../org.example.brokeragefirmnetwork';
 import 'rxjs/Rx';
 
 // Can be injected into a constructor
 @Injectable()
-export class SampleAssetService {
+export class ClosureService {
 
-  private NAMESPACE = 'SampleAsset';
+  private NAMESPACE = 'Closure';
 
-  constructor(private dataService: DataService<SampleAsset>) {
+  constructor(private dataService: DataService<Closure>) {
   };
 
-  public getAll(): Observable<SampleAsset[]> {
-    return this.dataService.getAll(this.NAMESPACE);
+  public getAll(): Observable<Closure[]> {
+      return this.dataService.getAll(this.NAMESPACE);
   }
 
-  public getAsset(id: any): Observable<SampleAsset> {
+  public getTransaction(id: any): Observable<Closure> {
     return this.dataService.getSingle(this.NAMESPACE, id);
   }
 
-  public addAsset(itemToAdd: any): Observable<SampleAsset> {
+  public addTransaction(itemToAdd: any): Observable<Closure> {
     return this.dataService.add(this.NAMESPACE, itemToAdd);
   }
 
-  public updateAsset(id: any, itemToUpdate: any): Observable<SampleAsset> {
+  public updateTransaction(id: any, itemToUpdate: any): Observable<Closure> {
     return this.dataService.update(this.NAMESPACE, id, itemToUpdate);
   }
 
-  public deleteAsset(id: any): Observable<SampleAsset> {
+  public deleteTransaction(id: any): Observable<Closure> {
     return this.dataService.delete(this.NAMESPACE, id);
   }
 
 }
+

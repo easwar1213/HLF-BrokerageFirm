@@ -21,25 +21,25 @@ import { HttpModule } from '@angular/http';
 import { FormsModule, ReactiveFormsModule, FormGroup, FormControl } from '@angular/forms';
 import * as sinon from 'sinon';
 import { DataService } from '../data.service';
-import { SampleAssetComponent } from './SampleAsset.component';
-import { SampleAssetService } from './SampleAsset.service';
-import { Observable } from 'rxjs'
+import { LicenseBrokersComponent } from './LicenseBrokers.component';
+import { LicenseBrokersService } from './LicenseBrokers.service';
+import { Observable } from 'rxjs';
 
-describe('SampleAssetComponent', () => {
-  let component: SampleAssetComponent;
-  let fixture: ComponentFixture<SampleAssetComponent>;
+describe('LicenseBrokersComponent', () => {
+  let component: LicenseBrokersComponent;
+  let fixture: ComponentFixture<LicenseBrokersComponent>;
 
-  let mockSampleAssetService;
+  let mockLicenseBrokersService;
   let mockDataService
 
   beforeEach(async(() => {
 
-    mockSampleAssetService = sinon.createStubInstance(SampleAssetService);
-    mockSampleAssetService.getAll.returns([]);
+    mockLicenseBrokersService = sinon.createStubInstance(LicenseBrokersService);
+    mockLicenseBrokersService.getAll.returns([]);
     mockDataService = sinon.createStubInstance(DataService);
 
     TestBed.configureTestingModule({
-      declarations: [ SampleAssetComponent ],
+      declarations: [ LicenseBrokersComponent ],
       imports: [
         BrowserModule,
         FormsModule,
@@ -47,12 +47,12 @@ describe('SampleAssetComponent', () => {
         HttpModule
       ],
       providers: [
-        {provide: SampleAssetService, useValue: mockSampleAssetService },
+        {provide: LicenseBrokersService, useValue: mockLicenseBrokersService },
         {provide: DataService, useValue: mockDataService },
       ]
     });
 
-    fixture = TestBed.createComponent(SampleAssetComponent);
+    fixture = TestBed.createComponent(LicenseBrokersComponent);
     component = fixture.componentInstance;
 
   }));
@@ -61,35 +61,35 @@ describe('SampleAssetComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should update the table when a SampleAsset is added', fakeAsync(() => {
+  it('should update the table when a LicenseBrokers is added', fakeAsync(() => {
     let loadAllSpy = sinon.stub(component, 'loadAll');
-    sinon.stub(component.serviceSampleAsset, 'addAsset').returns(new Observable<any>(observer => {
+    sinon.stub(component.serviceLicenseBrokers, 'addParticipant').returns(new Observable(observer => {
       observer.next('');
       observer.complete();
     }));
 
-    component.addAsset({});
+    component.addParticipant({});
 
     tick();
-    
+
     expect(loadAllSpy.callCount).toBe(1);
 
     loadAllSpy.restore();
   }));
 
-  it('should update the table when a SampleAsset is updated', fakeAsync(() => {
+  it('should update the table when a LicenseBrokers is updated', fakeAsync(() => {
     let loadAllSpy = sinon.stub(component, 'loadAll');
-    sinon.stub(component.serviceSampleAsset, 'updateAsset').returns(new Observable<any>(observer => {
+    sinon.stub(component.serviceLicenseBrokers, 'updateParticipant').returns(new Observable(observer => {
       observer.next('');
       observer.complete();
     }));
 
     // mock form to be passed to the update function
     let mockForm = new FormGroup({
-      assetId: new FormControl('id')
+      brokerId: new FormControl('id')
     });
-
-    component.updateAsset(mockForm);
+    
+    component.updateParticipant(mockForm);
 
     tick();
 
@@ -97,23 +97,21 @@ describe('SampleAssetComponent', () => {
 
     loadAllSpy.restore();
   }));
-
-  it('should update the table when a SampleAsset is deleted', fakeAsync(() => {
+  
+  it('should update the table when a LicenseBrokers is deleted', fakeAsync(() => {
     let loadAllSpy = sinon.stub(component, 'loadAll');
-    sinon.stub(component.serviceSampleAsset, 'deleteAsset').returns(new Observable<any>(observer => {
+    sinon.stub(component.serviceLicenseBrokers, 'deleteParticipant').returns(new Observable(observer => {
       observer.next('');
       observer.complete();
     }));
 
-    component.setId('id');
-    
-    component.deleteAsset();
+    component.deleteParticipant();
 
     tick();
 
     expect(loadAllSpy.callCount).toBe(1);
 
     loadAllSpy.restore();
-  }));  
+  }));
 
 });

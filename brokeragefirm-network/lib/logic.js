@@ -22,22 +22,59 @@
  * @param {org.example.brokeragefirmnetwork.SampleTransaction} sampleTransaction
  * @transaction
  */
-async function sampleTransaction(tx) {
-    // Save the old value of the asset.
-    const oldValue = tx.asset.value;
 
-    // Update the asset with the new value.
-    tx.asset.value = tx.newValue;
+const brokerageNetwork = 'org.example.brokeragefirmnetwork';
 
+async function createLead(tx) {
+    // Create a new instance of Lead.
+    const factory = getFactory();
+    const lead = factory.newResource(brokerageNetwork, 'OpportunityWon', tx.opportunityId);
+    lead.date = tx.date;
+    lead.brokerageId = factory.newRelationship(brokerageNetwork, 'BrokerageFirms', tx.brokerageId);    
+    lead.brokerageName = factory.newRelationship(brokerageNetwork, 'BrokerageFirms', tx.brokerageName);    
+    lead.description=tx.description;
+    lead.brokerID = factory.newRelationship(brokerageNetwork, 'LicenseBrokers', tx.brokerId);    
+    lead.brokerName = factory.newRelationship(brokerageNetwork, 'LicenseBrokers', tx.brokerName);
+    lead.employeerId = factory.newRelationship(brokerageNetwork, 'Employeers', tx.employeerId);    
+    lead.employeerName = factory.newRelationship(brokerageNetwork, 'Employeers', tx.employeerName);
+    lead.oppurtunityStatus = tx.oppurtunityStatus;
     // Get the asset registry for the asset.
-    const assetRegistry = await getAssetRegistry('org.example.brokeragefirmnetwork.SampleAsset');
+    const assetRegistry = await getAssetRegistry('org.example.brokeragefirmnetwork.OpportunityWon');
     // Update the asset in the asset registry.
-    await assetRegistry.update(tx.asset);
+    await assetRegistry.add(lead);
 
-    // Emit an event for the modified asset.
-    let event = getFactory().newEvent('org.example.brokeragefirmnetwork', 'SampleEvent');
-    event.asset = tx.asset;
-    event.oldValue = oldValue;
-    event.newValue = tx.newValue;
+    // Emit an event for the added lead.
+    let event = getFactory().newEvent('org.example.brokeragefirmnetwork', 'LeadCreate');
+    event.opportunityId = tx.opportunityId;
+    event.date = tx.date;
+    event.brokerageId = tx.brokerageId;
+    event.brokerageName = tx.brokerageName;
+    event.description = tx.description;
+    event.brokerID = tx.brokerID;
+    event.brokerName = tx.brokerName;
+    event.employeerId = tx.employeerId;
+    event.employeerName = tx.employeerName;
+    event.oppurtunityStatus = tx.oppurtunityStatus;
     emit(event);
 }
+
+// async function updateOpportunity(tx) {
+//     // Create a new instance of Lead.
+//     const factory = getFactory();
+//     const opp;
+//     opp.opportunityId=tx.opportunityId;
+//     opp.oppurtunityStatus=tx.opportunityId;
+//     opp.description=tx.description;
+//     opp.oppurtunityStatus = tx.oppurtunityStatus;
+//     // Get the asset registry for the asset.
+//     const assetRegistry = await getAssetRegistry('org.example.brokeragefirmnetwork.OpportunityWon');
+//     // Update the asset in the asset registry.
+//     await assetRegistry.update(opp);
+
+//     // Emit an event for the added UpdateOpp.
+//     let event = getFactory().newEvent('org.example.brokeragefirmnetwork', 'UpdateOpp');
+//     event.opportunityId = tx.opportunityId;
+//     event.description = tx.description;
+//     event.oppurtunityStatus = tx.oppurtunityStatus;
+//     emit(event);
+// }

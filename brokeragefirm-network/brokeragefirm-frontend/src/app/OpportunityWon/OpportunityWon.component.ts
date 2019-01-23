@@ -14,16 +14,16 @@
 
 import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
-import { SampleAssetService } from './SampleAsset.service';
+import { OpportunityWonService } from './OpportunityWon.service';
 import 'rxjs/add/operator/toPromise';
 
 @Component({
-  selector: 'app-sampleasset',
-  templateUrl: './SampleAsset.component.html',
-  styleUrls: ['./SampleAsset.component.css'],
-  providers: [SampleAssetService]
+  selector: 'app-opportunitywon',
+  templateUrl: './OpportunityWon.component.html',
+  styleUrls: ['./OpportunityWon.component.css'],
+  providers: [OpportunityWonService]
 })
-export class SampleAssetComponent implements OnInit {
+export class OpportunityWonComponent implements OnInit {
 
   myForm: FormGroup;
 
@@ -32,15 +32,27 @@ export class SampleAssetComponent implements OnInit {
   private currentId;
   private errorMessage;
 
-  assetId = new FormControl('', Validators.required);
-  owner = new FormControl('', Validators.required);
-  value = new FormControl('', Validators.required);
+  opportunityId = new FormControl('', Validators.required);
+  brokerageId = new FormControl('', Validators.required);
+  brokerageName = new FormControl('', Validators.required);
+  description = new FormControl('', Validators.required);
+  brokerID = new FormControl('', Validators.required);
+  brokerName = new FormControl('', Validators.required);
+  employeerId = new FormControl('', Validators.required);
+  employeerName = new FormControl('', Validators.required);
+  oppurtunityStatus = new FormControl('', Validators.required);
 
-  constructor(public serviceSampleAsset: SampleAssetService, fb: FormBuilder) {
+  constructor(public serviceOpportunityWon: OpportunityWonService, fb: FormBuilder) {
     this.myForm = fb.group({
-      assetId: this.assetId,
-      owner: this.owner,
-      value: this.value
+      opportunityId: this.opportunityId,
+      brokerageId: this.brokerageId,
+      brokerageName: this.brokerageName,
+      description: this.description,
+      brokerID: this.brokerID,
+      brokerName: this.brokerName,
+      employeerId: this.employeerId,
+      employeerName: this.employeerName,
+      oppurtunityStatus: this.oppurtunityStatus
     });
   };
 
@@ -50,7 +62,7 @@ export class SampleAssetComponent implements OnInit {
 
   loadAll(): Promise<any> {
     const tempList = [];
-    return this.serviceSampleAsset.getAll()
+    return this.serviceOpportunityWon.getAll()
     .toPromise()
     .then((result) => {
       this.errorMessage = null;
@@ -97,26 +109,44 @@ export class SampleAssetComponent implements OnInit {
 
   addAsset(form: any): Promise<any> {
     this.asset = {
-      $class: 'org.example.brokeragefirmnetwork.SampleAsset',
-      'assetId': this.assetId.value,
-      'owner': this.owner.value,
-      'value': this.value.value
+      $class: 'org.example.brokeragefirmnetwork.OpportunityWon',
+      'opportunityId': this.opportunityId.value,
+      'brokerageId': this.brokerageId.value,
+      'brokerageName': this.brokerageName.value,
+      'description': this.description.value,
+      'brokerID': this.brokerID.value,
+      'brokerName': this.brokerName.value,
+      'employeerId': this.employeerId.value,
+      'employeerName': this.employeerName.value,
+      'oppurtunityStatus': this.oppurtunityStatus.value
     };
 
     this.myForm.setValue({
-      'assetId': null,
-      'owner': null,
-      'value': null
+      'opportunityId': null,
+      'brokerageId': null,
+      'brokerageName': null,
+      'description': null,
+      'brokerID': null,
+      'brokerName': null,
+      'employeerId': null,
+      'employeerName': null,
+      'oppurtunityStatus': null
     });
 
-    return this.serviceSampleAsset.addAsset(this.asset)
+    return this.serviceOpportunityWon.addAsset(this.asset)
     .toPromise()
     .then(() => {
       this.errorMessage = null;
       this.myForm.setValue({
-        'assetId': null,
-        'owner': null,
-        'value': null
+        'opportunityId': null,
+        'brokerageId': null,
+        'brokerageName': null,
+        'description': null,
+        'brokerID': null,
+        'brokerName': null,
+        'employeerId': null,
+        'employeerName': null,
+        'oppurtunityStatus': null
       });
       this.loadAll();
     })
@@ -132,12 +162,18 @@ export class SampleAssetComponent implements OnInit {
 
   updateAsset(form: any): Promise<any> {
     this.asset = {
-      $class: 'org.example.brokeragefirmnetwork.SampleAsset',
-      'owner': this.owner.value,
-      'value': this.value.value
+      $class: 'org.example.brokeragefirmnetwork.OpportunityWon',
+      'brokerageId': this.brokerageId.value,
+      'brokerageName': this.brokerageName.value,
+      'description': this.description.value,
+      'brokerID': this.brokerID.value,
+      'brokerName': this.brokerName.value,
+      'employeerId': this.employeerId.value,
+      'employeerName': this.employeerName.value,
+      'oppurtunityStatus': this.oppurtunityStatus.value
     };
 
-    return this.serviceSampleAsset.updateAsset(form.get('assetId').value, this.asset)
+    return this.serviceOpportunityWon.updateAsset(form.get('opportunityId').value, this.asset)
     .toPromise()
     .then(() => {
       this.errorMessage = null;
@@ -157,7 +193,7 @@ export class SampleAssetComponent implements OnInit {
 
   deleteAsset(): Promise<any> {
 
-    return this.serviceSampleAsset.deleteAsset(this.currentId)
+    return this.serviceOpportunityWon.deleteAsset(this.currentId)
     .toPromise()
     .then(() => {
       this.errorMessage = null;
@@ -180,32 +216,74 @@ export class SampleAssetComponent implements OnInit {
 
   getForm(id: any): Promise<any> {
 
-    return this.serviceSampleAsset.getAsset(id)
+    return this.serviceOpportunityWon.getAsset(id)
     .toPromise()
     .then((result) => {
       this.errorMessage = null;
       const formObject = {
-        'assetId': null,
-        'owner': null,
-        'value': null
+        'opportunityId': null,
+        'brokerageId': null,
+        'brokerageName': null,
+        'description': null,
+        'brokerID': null,
+        'brokerName': null,
+        'employeerId': null,
+        'employeerName': null,
+        'oppurtunityStatus': null
       };
 
-      if (result.assetId) {
-        formObject.assetId = result.assetId;
+      if (result.opportunityId) {
+        formObject.opportunityId = result.opportunityId;
       } else {
-        formObject.assetId = null;
+        formObject.opportunityId = null;
       }
 
-      if (result.owner) {
-        formObject.owner = result.owner;
+      if (result.brokerageId) {
+        formObject.brokerageId = result.brokerageId;
       } else {
-        formObject.owner = null;
+        formObject.brokerageId = null;
       }
 
-      if (result.value) {
-        formObject.value = result.value;
+      if (result.brokerageName) {
+        formObject.brokerageName = result.brokerageName;
       } else {
-        formObject.value = null;
+        formObject.brokerageName = null;
+      }
+
+      if (result.description) {
+        formObject.description = result.description;
+      } else {
+        formObject.description = null;
+      }
+
+      if (result.brokerID) {
+        formObject.brokerID = result.brokerID;
+      } else {
+        formObject.brokerID = null;
+      }
+
+      if (result.brokerName) {
+        formObject.brokerName = result.brokerName;
+      } else {
+        formObject.brokerName = null;
+      }
+
+      if (result.employeerId) {
+        formObject.employeerId = result.employeerId;
+      } else {
+        formObject.employeerId = null;
+      }
+
+      if (result.employeerName) {
+        formObject.employeerName = result.employeerName;
+      } else {
+        formObject.employeerName = null;
+      }
+
+      if (result.oppurtunityStatus) {
+        formObject.oppurtunityStatus = result.oppurtunityStatus;
+      } else {
+        formObject.oppurtunityStatus = null;
       }
 
       this.myForm.setValue(formObject);
@@ -224,9 +302,15 @@ export class SampleAssetComponent implements OnInit {
 
   resetForm(): void {
     this.myForm.setValue({
-      'assetId': null,
-      'owner': null,
-      'value': null
+      'opportunityId': null,
+      'brokerageId': null,
+      'brokerageName': null,
+      'description': null,
+      'brokerID': null,
+      'brokerName': null,
+      'employeerId': null,
+      'employeerName': null,
+      'oppurtunityStatus': null
       });
   }
 

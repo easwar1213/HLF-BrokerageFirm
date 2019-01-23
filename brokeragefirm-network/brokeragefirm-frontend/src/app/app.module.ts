@@ -21,19 +21,31 @@ import { DataService } from './data.service';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 
-import { SampleAssetComponent } from './SampleAsset/SampleAsset.component';
+import { OpportunityWonComponent } from './OpportunityWon/OpportunityWon.component';
 
-import { SampleParticipantComponent } from './SampleParticipant/SampleParticipant.component';
+import { BrokerageFirmsComponent } from './BrokerageFirms/BrokerageFirms.component';
+import { LicenseBrokersComponent } from './LicenseBrokers/LicenseBrokers.component';
+import { EmployeersComponent } from './Employeers/Employeers.component';
 
-import { SampleTransactionComponent } from './SampleTransaction/SampleTransaction.component';
+import { CreateLeadComponent } from './CreateLead/CreateLead.component';
+import { OpportunityComponent } from './Opportunity/Opportunity.component';
+import { OpportunityWIPComponent } from './OpportunityWIP/OpportunityWIP.component';
+import { WonComponent } from './Won/Won.component';
+import { ClosureComponent } from './Closure/Closure.component';
 
   @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
-    SampleAssetComponent,
-    SampleParticipantComponent,
-    SampleTransactionComponent
+    OpportunityWonComponent,
+    BrokerageFirmsComponent,
+    LicenseBrokersComponent,
+    EmployeersComponent,
+    CreateLeadComponent,
+    OpportunityComponent,
+    OpportunityWIPComponent,
+    WonComponent,
+    ClosureComponent
   ],
   imports: [
     BrowserModule,

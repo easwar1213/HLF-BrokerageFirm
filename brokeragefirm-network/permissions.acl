@@ -15,27 +15,56 @@
 /**
  * Sample access control list.
  */
-rule EverybodyCanReadEverything {
-    description: "Allow all participants read access to all resources"
-    participant: "org.example.brokeragefirmnetwork.SampleParticipant"
-    operation: READ
-    resource: "org.example.brokeragefirmnetwork.*"
+rule ReadUpdateBrokerageFirm {
+    description: "Allow to Brokerage Firms Read and Update Informations"
+    participant(p): "org.example.brokeragefirmnetwork.BrokerageFirms"
+    operation: READ,UPDATE
+    resource(r): "org.example.brokeragefirmnetwork.BrokerageFirms"
+    condition: (r.brokerageID.getIdentifier() === p.getIdentifier())
     action: ALLOW
 }
 
-rule EverybodyCanSubmitTransactions {
-    description: "Allow all participants to submit transactions"
-    participant: "org.example.brokeragefirmnetwork.SampleParticipant"
-    operation: CREATE
-    resource: "org.example.brokeragefirmnetwork.SampleTransaction"
-    action: ALLOW
-}
-
-rule OwnerHasFullAccessToTheirAssets {
-    description: "Allow all participants full access to their assets"
-    participant(p): "org.example.brokeragefirmnetwork.SampleParticipant"
+rule ReadUpdateDelLicenseBrokers {
+    description: "Allow Brokerage Firms to do all operations in License Brokers"
+    participant(p): "org.example.brokeragefirmnetwork.BrokerageFirms"
     operation: ALL
-    resource(r): "org.example.brokeragefirmnetwork.SampleAsset"
+    resource(r): "org.example.brokeragefirmnetwork.LicenseBrokers"
+    condition: (r.brokerageID.getIdentifier() === p.getIdentifier())
+    action: ALLOW
+}
+
+rule ReadUpdateDelEmployeers {
+    description: "Allow Brokerage Firms to do all operations in Employeers"
+    participant(p): "org.example.brokeragefirmnetwork.BrokerageFirms"
+    operation: ALL
+    resource(r): "org.example.brokeragefirmnetwork.Employeers"
+    condition: (r.brokerageID.getIdentifier() === p.getIdentifier())
+    action: ALLOW
+}
+
+rule ReadEmployeers {
+    description: "Allow License Broker only perform Read operations of Employeers"
+    participant(p): "org.example.brokeragefirmnetwork.BrokerageFirms"
+    operation: READ
+    resource(r): "org.example.brokeragefirmnetwork.Employeers"
+    condition: (r.brokerageID.getIdentifier() === p.getIdentifier())
+    action: ALLOW
+}
+
+rule ReadUpdateDelOppurtunityWON {
+    description: "Allow Brokerage Firms to do all operations in OppurtunityWon Asset"
+    participant(p): "org.example.brokeragefirmnetwork.BrokerageFirms"
+    operation: ALL
+    resource(r): "org.example.brokeragefirmnetwork.OpportunityWon"
+    condition: (r.owner.getIdentifier() === p.getIdentifier())
+    action: ALLOW
+}
+
+rule ReadUpdateOppurtunityWON {
+    description: "Allow License Broker only perform Read and Update operations in OppurtunityWon Asset"
+    participant(p): "org.example.brokeragefirmnetwork.LicenseBrokers"
+    operation: ALL
+    resource(r): "org.example.brokeragefirmnetwork.OpportunityWon"
     condition: (r.owner.getIdentifier() === p.getIdentifier())
     action: ALLOW
 }
