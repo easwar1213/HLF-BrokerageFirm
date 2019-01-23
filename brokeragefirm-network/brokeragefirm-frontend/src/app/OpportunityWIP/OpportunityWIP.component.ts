@@ -33,7 +33,7 @@ export class OpportunityWIPComponent implements OnInit {
   private errorMessage;
 
   opportunityId = new FormControl('', Validators.required);
-  Description = new FormControl('', Validators.required);
+  description = new FormControl('', Validators.required);
   oppurtunityStatus = new FormControl('', Validators.required);
   transactionId = new FormControl('', Validators.required);
   timestamp = new FormControl('', Validators.required);
@@ -42,7 +42,7 @@ export class OpportunityWIPComponent implements OnInit {
   constructor(private serviceOpportunityWIP: OpportunityWIPService, fb: FormBuilder) {
     this.myForm = fb.group({
       opportunityId: this.opportunityId,
-      Description: this.Description,
+      description: this.description,
       oppurtunityStatus: this.oppurtunityStatus,
       transactionId: this.transactionId,
       timestamp: this.timestamp
@@ -104,7 +104,7 @@ export class OpportunityWIPComponent implements OnInit {
     this.Transaction = {
       $class: 'org.example.brokeragefirmnetwork.OpportunityWIP',
       'opportunityId': this.opportunityId.value,
-      'Description': this.Description.value,
+      'description': this.description.value,
       'oppurtunityStatus': this.oppurtunityStatus.value,
       'transactionId': this.transactionId.value,
       'timestamp': this.timestamp.value
@@ -112,7 +112,7 @@ export class OpportunityWIPComponent implements OnInit {
 
     this.myForm.setValue({
       'opportunityId': null,
-      'Description': null,
+      'description': null,
       'oppurtunityStatus': null,
       'transactionId': null,
       'timestamp': null
@@ -124,7 +124,7 @@ export class OpportunityWIPComponent implements OnInit {
       this.errorMessage = null;
       this.myForm.setValue({
         'opportunityId': null,
-        'Description': null,
+        'description': null,
         'oppurtunityStatus': null,
         'transactionId': null,
         'timestamp': null
@@ -143,7 +143,7 @@ export class OpportunityWIPComponent implements OnInit {
     this.Transaction = {
       $class: 'org.example.brokeragefirmnetwork.OpportunityWIP',
       'opportunityId': this.opportunityId.value,
-      'Description': this.Description.value,
+      'description': this.description.value,
       'oppurtunityStatus': this.oppurtunityStatus.value,
       'timestamp': this.timestamp.value
     };
@@ -194,7 +194,7 @@ export class OpportunityWIPComponent implements OnInit {
       this.errorMessage = null;
       const formObject = {
         'opportunityId': null,
-        'Description': null,
+        'description': null,
         'oppurtunityStatus': null,
         'transactionId': null,
         'timestamp': null
@@ -206,10 +206,10 @@ export class OpportunityWIPComponent implements OnInit {
         formObject.opportunityId = null;
       }
 
-      if (result.Description) {
-        formObject.Description = result.Description;
+      if (result.description) {
+        formObject.description = result.description;
       } else {
-        formObject.Description = null;
+        formObject.description = null;
       }
 
       if (result.oppurtunityStatus) {
@@ -247,7 +247,7 @@ export class OpportunityWIPComponent implements OnInit {
   resetForm(): void {
     this.myForm.setValue({
       'opportunityId': null,
-      'Description': null,
+      'description': null,
       'oppurtunityStatus': null,
       'transactionId': null,
       'timestamp': null

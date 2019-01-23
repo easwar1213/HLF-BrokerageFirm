@@ -36,7 +36,7 @@ export class OpportunityWonComponent implements OnInit {
   brokerageId = new FormControl('', Validators.required);
   brokerageName = new FormControl('', Validators.required);
   description = new FormControl('', Validators.required);
-  brokerID = new FormControl('', Validators.required);
+  brokerId = new FormControl('', Validators.required);
   brokerName = new FormControl('', Validators.required);
   employeerId = new FormControl('', Validators.required);
   employeerName = new FormControl('', Validators.required);
@@ -48,7 +48,7 @@ export class OpportunityWonComponent implements OnInit {
       brokerageId: this.brokerageId,
       brokerageName: this.brokerageName,
       description: this.description,
-      brokerID: this.brokerID,
+      brokerId: this.brokerId,
       brokerName: this.brokerName,
       employeerId: this.employeerId,
       employeerName: this.employeerName,
@@ -114,7 +114,7 @@ export class OpportunityWonComponent implements OnInit {
       'brokerageId': this.brokerageId.value,
       'brokerageName': this.brokerageName.value,
       'description': this.description.value,
-      'brokerID': this.brokerID.value,
+      'brokerId': this.brokerId.value,
       'brokerName': this.brokerName.value,
       'employeerId': this.employeerId.value,
       'employeerName': this.employeerName.value,
@@ -126,7 +126,7 @@ export class OpportunityWonComponent implements OnInit {
       'brokerageId': null,
       'brokerageName': null,
       'description': null,
-      'brokerID': null,
+      'brokerId': null,
       'brokerName': null,
       'employeerId': null,
       'employeerName': null,
@@ -142,7 +142,7 @@ export class OpportunityWonComponent implements OnInit {
         'brokerageId': null,
         'brokerageName': null,
         'description': null,
-        'brokerID': null,
+        'brokerId': null,
         'brokerName': null,
         'employeerId': null,
         'employeerName': null,
@@ -166,7 +166,7 @@ export class OpportunityWonComponent implements OnInit {
       'brokerageId': this.brokerageId.value,
       'brokerageName': this.brokerageName.value,
       'description': this.description.value,
-      'brokerID': this.brokerID.value,
+      'brokerId': this.brokerId.value,
       'brokerName': this.brokerName.value,
       'employeerId': this.employeerId.value,
       'employeerName': this.employeerName.value,
@@ -225,7 +225,7 @@ export class OpportunityWonComponent implements OnInit {
         'brokerageId': null,
         'brokerageName': null,
         'description': null,
-        'brokerID': null,
+        'brokerId': null,
         'brokerName': null,
         'employeerId': null,
         'employeerName': null,
@@ -256,10 +256,10 @@ export class OpportunityWonComponent implements OnInit {
         formObject.description = null;
       }
 
-      if (result.brokerID) {
-        formObject.brokerID = result.brokerID;
+      if (result.brokerId) {
+        formObject.brokerId = result.brokerId;
       } else {
-        formObject.brokerID = null;
+        formObject.brokerId = null;
       }
 
       if (result.brokerName) {
@@ -306,7 +306,7 @@ export class OpportunityWonComponent implements OnInit {
       'brokerageId': null,
       'brokerageName': null,
       'description': null,
-      'brokerID': null,
+      'brokerId': null,
       'brokerName': null,
       'employeerId': null,
       'employeerName': null,

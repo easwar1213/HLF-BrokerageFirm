@@ -59,7 +59,7 @@
                 <div class="form-group text-left">
                   <label for="brokerageCommunicationDetails">brokerageCommunicationDetails</label>
                   
-                    <input formControlName="brokerageCommunicationDetails" type="text" class="form-control">
+                      <textarea formControlName="brokerageCommunicationDetails" class="form-control" rows="3"></textarea>
                   
                 </div>
               
@@ -156,7 +156,9 @@
                 <label for="brokerageCommunicationDetails">brokerageCommunicationDetails</label>
   
                 
-                  <input [ngModel]="brokerageCommunicationDetails"formControlName="brokerageCommunicationDetails" type="text" class="form-control">
+                  
+                    <textarea [ngModel]="brokerageCommunicationDetails" formControlName="brokerageCommunicationDetails" class="form-control" rows="3"></textarea>
+                  
                 
   
               </div>

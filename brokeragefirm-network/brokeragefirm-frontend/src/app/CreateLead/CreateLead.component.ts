@@ -34,8 +34,9 @@ export class CreateLeadComponent implements OnInit {
 
   opportunityId = new FormControl('', Validators.required);
   brokerageId = new FormControl('', Validators.required);
-  Description = new FormControl('', Validators.required);
-  brokerID = new FormControl('', Validators.required);
+  brokerageName = new FormControl('', Validators.required);
+  description = new FormControl('', Validators.required);
+  brokerId = new FormControl('', Validators.required);
   brokerName = new FormControl('', Validators.required);
   employeerId = new FormControl('', Validators.required);
   employeerName = new FormControl('', Validators.required);
@@ -48,8 +49,9 @@ export class CreateLeadComponent implements OnInit {
     this.myForm = fb.group({
       opportunityId: this.opportunityId,
       brokerageId: this.brokerageId,
-      Description: this.Description,
-      brokerID: this.brokerID,
+      brokerageName: this.brokerageName,
+      description: this.description,
+      brokerId: this.brokerId,
       brokerName: this.brokerName,
       employeerId: this.employeerId,
       employeerName: this.employeerName,
@@ -115,8 +117,9 @@ export class CreateLeadComponent implements OnInit {
       $class: 'org.example.brokeragefirmnetwork.CreateLead',
       'opportunityId': this.opportunityId.value,
       'brokerageId': this.brokerageId.value,
-      'Description': this.Description.value,
-      'brokerID': this.brokerID.value,
+      'brokerageName': this.brokerageName.value,
+      'description': this.description.value,
+      'brokerId': this.brokerId.value,
       'brokerName': this.brokerName.value,
       'employeerId': this.employeerId.value,
       'employeerName': this.employeerName.value,
@@ -128,8 +131,9 @@ export class CreateLeadComponent implements OnInit {
     this.myForm.setValue({
       'opportunityId': null,
       'brokerageId': null,
-      'Description': null,
-      'brokerID': null,
+      'brokerageName': null,
+      'description': null,
+      'brokerId': null,
       'brokerName': null,
       'employeerId': null,
       'employeerName': null,
@@ -145,8 +149,9 @@ export class CreateLeadComponent implements OnInit {
       this.myForm.setValue({
         'opportunityId': null,
         'brokerageId': null,
-        'Description': null,
-        'brokerID': null,
+        'brokerageName': null,
+        'description': null,
+        'brokerId': null,
         'brokerName': null,
         'employeerId': null,
         'employeerName': null,
@@ -169,8 +174,9 @@ export class CreateLeadComponent implements OnInit {
       $class: 'org.example.brokeragefirmnetwork.CreateLead',
       'opportunityId': this.opportunityId.value,
       'brokerageId': this.brokerageId.value,
-      'Description': this.Description.value,
-      'brokerID': this.brokerID.value,
+      'brokerageName': this.brokerageName.value,
+      'description': this.description.value,
+      'brokerId': this.brokerId.value,
       'brokerName': this.brokerName.value,
       'employeerId': this.employeerId.value,
       'employeerName': this.employeerName.value,
@@ -225,8 +231,9 @@ export class CreateLeadComponent implements OnInit {
       const formObject = {
         'opportunityId': null,
         'brokerageId': null,
-        'Description': null,
-        'brokerID': null,
+        'brokerageName': null,
+        'description': null,
+        'brokerId': null,
         'brokerName': null,
         'employeerId': null,
         'employeerName': null,
@@ -247,16 +254,22 @@ export class CreateLeadComponent implements OnInit {
         formObject.brokerageId = null;
       }
 
-      if (result.Description) {
-        formObject.Description = result.Description;
+      if (result.brokerageName) {
+        formObject.brokerageName = result.brokerageName;
       } else {
-        formObject.Description = null;
+        formObject.brokerageName = null;
       }
 
-      if (result.brokerID) {
-        formObject.brokerID = result.brokerID;
+      if (result.description) {
+        formObject.description = result.description;
       } else {
-        formObject.brokerID = null;
+        formObject.description = null;
+      }
+
+      if (result.brokerId) {
+        formObject.brokerId = result.brokerId;
+      } else {
+        formObject.brokerId = null;
       }
 
       if (result.brokerName) {
@@ -313,8 +326,9 @@ export class CreateLeadComponent implements OnInit {
     this.myForm.setValue({
       'opportunityId': null,
       'brokerageId': null,
-      'Description': null,
-      'brokerID': null,
+      'brokerageName': null,
+      'description': null,
+      'brokerId': null,
       'brokerName': null,
       'employeerId': null,
       'employeerName': null,

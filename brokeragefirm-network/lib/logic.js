@@ -16,24 +16,22 @@
 /**
  * Write your transction processor functions here
  */
+const brokerageNetwork = 'org.example.brokeragefirmnetwork';
 
 /**
- * Sample transaction
- * @param {org.example.brokeragefirmnetwork.SampleTransaction} sampleTransaction
+ * Create Lead transaction
+ * @param {org.example.brokeragefirmnetwork.CreateLead} tx
  * @transaction
  */
-
-const brokerageNetwork = 'org.example.brokeragefirmnetwork';
 
 async function createLead(tx) {
     // Create a new instance of Lead.
     const factory = getFactory();
     const lead = factory.newResource(brokerageNetwork, 'OpportunityWon', tx.opportunityId);
-    lead.date = tx.date;
     lead.brokerageId = factory.newRelationship(brokerageNetwork, 'BrokerageFirms', tx.brokerageId);    
     lead.brokerageName = factory.newRelationship(brokerageNetwork, 'BrokerageFirms', tx.brokerageName);    
     lead.description=tx.description;
-    lead.brokerID = factory.newRelationship(brokerageNetwork, 'LicenseBrokers', tx.brokerId);    
+    lead.brokerId = factory.newRelationship(brokerageNetwork, 'LicenseBrokers', tx.brokerId);    
     lead.brokerName = factory.newRelationship(brokerageNetwork, 'LicenseBrokers', tx.brokerName);
     lead.employeerId = factory.newRelationship(brokerageNetwork, 'Employeers', tx.employeerId);    
     lead.employeerName = factory.newRelationship(brokerageNetwork, 'Employeers', tx.employeerName);
@@ -46,11 +44,10 @@ async function createLead(tx) {
     // Emit an event for the added lead.
     let event = getFactory().newEvent('org.example.brokeragefirmnetwork', 'LeadCreate');
     event.opportunityId = tx.opportunityId;
-    event.date = tx.date;
     event.brokerageId = tx.brokerageId;
     event.brokerageName = tx.brokerageName;
     event.description = tx.description;
-    event.brokerID = tx.brokerID;
+    event.brokerId = tx.brokerId;
     event.brokerName = tx.brokerName;
     event.employeerId = tx.employeerId;
     event.employeerName = tx.employeerName;

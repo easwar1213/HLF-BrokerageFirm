@@ -28,21 +28,21 @@ import {Event} from './org.hyperledger.composer.system';
       brokerageId: string;
       brokerageName: string;
       brokerageLicenseNo: string;
-      brokerageCommunicationDetails: string;
+      brokerageCommunicationDetails: CommunicationDetails;
       brokerageStatus: ParticipantStatus;
    }
    export class LicenseBrokers extends BrokerageFirms {
       brokerId: string;
       brokerName: string;
       brokerLicenseNo: string;
-      brokerCommunicationDetails: string;
+      brokerCommunicationDetails: CommunicationDetails;
       brokerStatus: ParticipantStatus;
    }
    export class Employeers extends BrokerageFirms {
       employeerId: string;
       employeerName: string;
       employeerLicenseNo: string;
-      employerCommunicationDetails: string;
+      employerCommunicationDetails: CommunicationDetails;
       employeerStatus: ParticipantStatus;
    }
    export class OpportunityWon extends Asset {
@@ -50,7 +50,7 @@ import {Event} from './org.hyperledger.composer.system';
       brokerageId: BrokerageFirms;
       brokerageName: BrokerageFirms;
       description: string;
-      brokerID: LicenseBrokers;
+      brokerId: LicenseBrokers;
       brokerName: LicenseBrokers;
       employeerId: Employeers;
       employeerName: Employeers;
@@ -59,8 +59,9 @@ import {Event} from './org.hyperledger.composer.system';
    export class CreateLead extends Transaction {
       opportunityId: string;
       brokerageId: BrokerageFirms;
-      Description: string;
-      brokerID: LicenseBrokers;
+      brokerageName: BrokerageFirms;
+      description: string;
+      brokerId: LicenseBrokers;
       brokerName: LicenseBrokers;
       employeerId: Employeers;
       employeerName: Employeers;
@@ -69,8 +70,9 @@ import {Event} from './org.hyperledger.composer.system';
    export class LeadCreate extends Event {
       opportunityId: string;
       brokerageId: BrokerageFirms;
-      Description: string;
-      brokerID: LicenseBrokers;
+      brokerageName: BrokerageFirms;
+      description: string;
+      brokerId: LicenseBrokers;
       brokerName: LicenseBrokers;
       employeerId: Employeers;
       employeerName: Employeers;
@@ -78,42 +80,42 @@ import {Event} from './org.hyperledger.composer.system';
    }
    export class Opportunity extends Transaction {
       opportunityId: string;
-      Description: string;
+      description: string;
       oppurtunityStatus: OppurtunityStatus;
    }
    export class UpdateOpp extends Event {
       opportunityId: string;
-      Description: string;
+      description: string;
       oppurtunityStatus: OppurtunityStatus;
    }
    export class OpportunityWIP extends Transaction {
       opportunityId: string;
-      Description: string;
+      description: string;
       oppurtunityStatus: OppurtunityStatus;
    }
    export class UpdateOppWIP extends Event {
       opportunityId: string;
-      Description: string;
+      description: string;
       oppurtunityStatus: OppurtunityStatus;
    }
    export class Won extends Transaction {
       opportunityId: string;
-      Description: string;
+      description: string;
       oppurtunityStatus: OppurtunityStatus;
    }
    export class UpdateOppWon extends Event {
       opportunityId: string;
-      Description: string;
+      description: string;
       oppurtunityStatus: OppurtunityStatus;
    }
    export class Closure extends Transaction {
       opportunityId: string;
-      Description: string;
+      description: string;
       oppurtunityStatus: OppurtunityStatus;
    }
    export class UpdateOppClosure extends Event {
       opportunityId: string;
-      Description: string;
+      description: string;
       oppurtunityStatus: OppurtunityStatus;
    }
 // }

@@ -52,7 +52,7 @@ participant BrokerageFirms identified by brokerageId {
   o String brokerageId
   o String brokerageName
   o String brokerageLicenseNo
-  o String brokerageCommunicationDetails
+  o CommunicationDetails brokerageCommunicationDetails
   o ParticipantStatus brokerageStatus default="ACTIVE"
 }
 
@@ -60,7 +60,7 @@ participant LicenseBrokers identified by brokerId extends BrokerageFirms{
   o String brokerId
   o String brokerName
   o String brokerLicenseNo
-  o String brokerCommunicationDetails
+  o CommunicationDetails brokerCommunicationDetails
   o ParticipantStatus brokerStatus default="ACTIVE"
 }
 
@@ -68,7 +68,7 @@ participant Employeers identified by employeerId extends BrokerageFirms{
   o String employeerId
   o String employeerName
   o String employeerLicenseNo
-  o String employerCommunicationDetails
+  o CommunicationDetails employerCommunicationDetails
   o ParticipantStatus employeerStatus default="ACTIVE"
 }
 
@@ -78,7 +78,7 @@ asset OpportunityWon identified by opportunityId {
   --> BrokerageFirms brokerageId
   --> BrokerageFirms brokerageName
   o String description
-  --> LicenseBrokers brokerID
+  --> LicenseBrokers brokerId
   --> LicenseBrokers brokerName
   --> Employeers employeerId
   --> Employeers employeerName
@@ -90,8 +90,9 @@ asset OpportunityWon identified by opportunityId {
 transaction CreateLead {
   o String opportunityId    
   --> BrokerageFirms brokerageId
-  o String Description
-  --> LicenseBrokers brokerID
+  --> BrokerageFirms brokerageName
+  o String description
+  --> LicenseBrokers brokerId
   --> LicenseBrokers brokerName
   --> Employeers employeerId
   --> Employeers employeerName
@@ -101,8 +102,9 @@ transaction CreateLead {
 event LeadCreate {
   o String opportunityId    
   --> BrokerageFirms brokerageId
-  o String Description
-  --> LicenseBrokers brokerID
+  --> BrokerageFirms brokerageName
+  o String description
+  --> LicenseBrokers brokerId
   --> LicenseBrokers brokerName
   --> Employeers employeerId
   --> Employeers employeerName
@@ -111,48 +113,48 @@ event LeadCreate {
 
 transaction Opportunity {
   o String opportunityId  
-  o String Description
+  o String description
   o OppurtunityStatus oppurtunityStatus default="OPPURTUNITY"
 }
 
 event UpdateOpp {
   o String opportunityId  
-  o String Description
+  o String description
   o OppurtunityStatus oppurtunityStatus default="OPPURTUNITY"
 }
 
 transaction OpportunityWIP {
   o String opportunityId  
-  o String Description
+  o String description
   o OppurtunityStatus oppurtunityStatus default="OPPURTUNITY_WIP"
 }
 
 event UpdateOppWIP {
   o String opportunityId  
-  o String Description
+  o String description
   o OppurtunityStatus oppurtunityStatus default="OPPURTUNITY_WIP"
 }
 
 transaction Won {
   o String opportunityId  
-  o String Description
+  o String description
   o OppurtunityStatus oppurtunityStatus default="OPPURTUNITY_WON"
 }
 
 event UpdateOppWon {
   o String opportunityId  
-  o String Description
+  o String description
   o OppurtunityStatus oppurtunityStatus default="OPPURTUNITY_WON"
 }
 
 transaction Closure {
   o String opportunityId  
-  o String Description
+  o String description
   o OppurtunityStatus oppurtunityStatus default="OPPURTUNITY_CLOSURE"
 }
 
 event UpdateOppClosure {
   o String opportunityId  
-  o String Description
+  o String description
   o OppurtunityStatus oppurtunityStatus default="OPPURTUNITY_CLOSURE"
 }

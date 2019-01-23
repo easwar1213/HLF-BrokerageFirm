@@ -31,13 +31,13 @@ describe('Starting tests for brokeragefirm-frontend', function() {
     })
   });
 
-  it('network-name should be brokeragefirm-network@0.0.7',() => {
+  it('network-name should be brokeragefirm-network@0.0.11',() => {
     element(by.css('.network-name')).getWebElement()
     .then((webElement) => {
       return webElement.getText();
     })
     .then((txt) => {
-      expect(txt).toBe('brokeragefirm-network@0.0.7.bna');
+      expect(txt).toBe('brokeragefirm-network@0.0.11.bna');
     });
   });
 
