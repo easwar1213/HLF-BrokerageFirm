@@ -51,6 +51,14 @@ rule BrokerageFirmCreateReadUpdateDelOppurtunityWON {
     action: ALLOW
 }
 
+rule BrokerageFirmCreateLead {
+    description: "Allow Brokerage Firm Create,Read,Update andf Delete OppurtunityWON asset"
+    participant: "org.example.brokeragefirmnetwork.BrokerageFirms"
+    operation: ALL
+    resource: "org.example.brokeragefirmnetwork.CreateLead"
+    action: ALLOW
+}
+
 rule LicenseBrokersReadUpdateThemselves {
     description: "Allow License Brokers Read and Update Themselves"
     participant(p): "org.example.brokeragefirmnetwork.LicenseBrokers"

@@ -77,7 +77,7 @@ export class AppComponent implements AfterViewInit {
           }
           else if (userType == 'Employeers'){
             companyName = resData.employeerName;
-          } else if (userType == 'Brokers'){
+          } else if (userType == 'LicenseBrokers'){
             companyName = resData.brokerName;         
           } else {
             companyName = null;

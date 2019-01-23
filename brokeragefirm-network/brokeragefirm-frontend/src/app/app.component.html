@@ -23,7 +23,7 @@
         </div>        
       </div>
       <ul class="nav navbar-nav">
-        <li class="dropdown active">
+        <li *ngIf="user.type == 'networkadmin' || user.type == 'brokeragefirms'" class="dropdown active">
             <a class="dropdown-toggle" data-toggle="dropdown">Assets</a>
             <ul class="dropdown-menu scrollable-menu">
               
@@ -35,15 +35,15 @@
           <a class="dropdown-toggle" data-toggle="dropdown">Participants</a>
           <ul class="dropdown-menu scrollable-menu">
             
-            <li><a [routerLink]="['/BrokerageFirms']">BrokerageFirms</a></li>
+            <li *ngIf="user.type == 'networkadmin' || user.type == 'brokeragefirms'"><a [routerLink]="['/BrokerageFirms']">BrokerageFirms</a></li>
             
-            <li><a [routerLink]="['/LicenseBrokers']">LicenseBrokers</a></li>
+            <li *ngIf="user.type == 'networkadmin' || user.type == 'brokeragefirms' || user.type == 'licensebrokers'"><a [routerLink]="['/LicenseBrokers']">LicenseBrokers</a></li>
             
-            <li><a [routerLink]="['/Employeers']">Employeers</a></li>
+            <li *ngIf="user.type == 'networkadmin' || user.type == 'brokeragefirms' || user.type == 'employeers'"><a [routerLink]="['/Employeers']">Employeers</a></li>
             
           </ul>
       </li>
-      <li class="dropdown active">
+      <li *ngIf="user.type == 'networkadmin' || user.type == 'brokeragefirms'" class="dropdown active">
         <a class="dropdown-toggle" data-toggle="dropdown">Transactions</a>
         <ul class="dropdown-menu scrollable-menu">
           
