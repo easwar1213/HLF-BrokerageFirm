@@ -60,7 +60,6 @@ async function createLead(tx) {
 //     const factory = getFactory();
 //     const opp;
 //     opp.opportunityId=tx.opportunityId;
-//     opp.oppurtunityStatus=tx.opportunityId;
 //     opp.description=tx.description;
 //     opp.oppurtunityStatus = tx.oppurtunityStatus;
 //     // Get the asset registry for the asset.
