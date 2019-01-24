@@ -26,6 +26,8 @@ import 'rxjs/add/operator/toPromise';
 export class OpportunityWonComponent implements OnInit {
 
   myForm: FormGroup;
+  user: any = {};
+  enableCreateDel: boolean;
 
   private allAssets;
   private asset;
@@ -57,7 +59,13 @@ export class OpportunityWonComponent implements OnInit {
   };
 
   ngOnInit(): void {
+    this.getUser();
     this.loadAll();
+  }
+
+  getUser(): void {
+    this.user = JSON.parse(localStorage.getItem('user'));
+    this.enableCreateDel = true ? this.user.type == 'networkadmin' || this.user.type == 'brokeragefirms' : false;
   }
 
   loadAll(): Promise<any> {
@@ -239,7 +247,7 @@ export class OpportunityWonComponent implements OnInit {
       }
 
       if (result.brokerageId) {
-        formObject.brokerageId = result.brokerageId;
+        formObject.brokerageId = String(result.brokerageId).split('#')[1];
       } else {
         formObject.brokerageId = null;
       }

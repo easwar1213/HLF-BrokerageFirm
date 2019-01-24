@@ -23,7 +23,7 @@
         </div>        
       </div>
       <ul class="nav navbar-nav">
-        <li *ngIf="user.type == 'networkadmin' || user.type == 'brokeragefirms'" class="dropdown active">
+        <li *ngIf="user.type == 'networkadmin' || user.type == 'brokeragefirms' || user.type == 'licensebrokers'" class="dropdown active">
             <a class="dropdown-toggle" data-toggle="dropdown">Assets</a>
             <ul class="dropdown-menu scrollable-menu">
               
@@ -43,19 +43,19 @@
             
           </ul>
       </li>
-      <li *ngIf="user.type == 'networkadmin' || user.type == 'brokeragefirms'" class="dropdown active">
+      <li *ngIf="user.type == 'networkadmin' || user.type == 'brokeragefirms' || user.type == 'licensebrokers'" class="dropdown active">
         <a class="dropdown-toggle" data-toggle="dropdown">Transactions</a>
         <ul class="dropdown-menu scrollable-menu">
           
-          <li><a [routerLink]="['/CreateLead']">CreateLead</a></li>
+          <li *ngIf="user.type == 'networkadmin' || user.type == 'brokeragefirms'"><a [routerLink]="['/CreateLead']">CreateLead</a></li>
           
-          <li><a [routerLink]="['/Opportunity']">Opportunity</a></li>
+          <li *ngIf="user.type == 'networkadmin' || user.type == 'brokeragefirms' || user.type == 'licensebrokers'"><a [routerLink]="['/Opportunity']">Opportunity</a></li>
           
-          <li><a [routerLink]="['/OpportunityWIP']">OpportunityWIP</a></li>
+          <li *ngIf="user.type == 'networkadmin' || user.type == 'brokeragefirms' || user.type == 'licensebrokers'"><a [routerLink]="['/OpportunityWIP']">OpportunityWIP</a></li>
           
-          <li><a [routerLink]="['/Won']">Won</a></li>
+          <li *ngIf="user.type == 'networkadmin' || user.type == 'brokeragefirms' || user.type == 'licensebrokers'"><a [routerLink]="['/Won']">Won</a></li>
           
-          <li><a [routerLink]="['/Closure']">Closure</a></li>
+          <li *ngIf="user.type == 'networkadmin' || user.type == 'brokeragefirms'"><a [routerLink]="['/Closure']">Closure</a></li>
           
         </ul>
     </li>

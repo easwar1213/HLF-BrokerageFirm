@@ -26,36 +26,65 @@ rule BrokerageFirmReadUpdateThemselves {
 
 rule BrokerageFirmCreateReadUpdateDelLicenseBrokers {
     description: "Allow Brokerage Firm Create,Read,Update and Delete License Brokers"
-    participant(p): "org.example.brokeragefirmnetwork.BrokerageFirms"
+    participant: "org.example.brokeragefirmnetwork.BrokerageFirms"
     operation: ALL
-    resource(r): "org.example.brokeragefirmnetwork.LicenseBrokers"
-    condition: (r.brokerageId.getIdentifier() === p.getIdentifier())
+    resource: "org.example.brokeragefirmnetwork.LicenseBrokers"
     action: ALLOW
 }
 
 rule BrokerageFirmCreateReadUpdateDelEmployeers {
     description: "Allow Brokerage Firm Create,Read,Update and Delete Employeers"
-    participant(p): "org.example.brokeragefirmnetwork.BrokerageFirms"
+    participant: "org.example.brokeragefirmnetwork.BrokerageFirms"
     operation: ALL
-    resource(r): "org.example.brokeragefirmnetwork.Employeers"
-    condition: (r.brokerageId.getIdentifier() === p.getIdentifier())
+    resource: "org.example.brokeragefirmnetwork.Employeers"
     action: ALLOW
 }
 
 rule BrokerageFirmCreateReadUpdateDelOppurtunityWON {
     description: "Allow Brokerage Firm Create,Read,Update andf Delete OppurtunityWON asset"
-    participant(p): "org.example.brokeragefirmnetwork.BrokerageFirms"
+    participant: "org.example.brokeragefirmnetwork.BrokerageFirms"
     operation: ALL
-    resource(r): "org.example.brokeragefirmnetwork.OpportunityWon"
-    condition: (r.brokerageId.getIdentifier() === p.getIdentifier())
+    resource: "org.example.brokeragefirmnetwork.OpportunityWon"
     action: ALLOW
 }
 
 rule BrokerageFirmCreateLead {
-    description: "Allow Brokerage Firm Create,Read,Update andf Delete OppurtunityWON asset"
+    description: "Allow Brokerage Firm Create Lead"
     participant: "org.example.brokeragefirmnetwork.BrokerageFirms"
     operation: ALL
     resource: "org.example.brokeragefirmnetwork.CreateLead"
+    action: ALLOW
+}
+
+rule BrokerageFirmOppurtunity {
+    description: "Allow Brokerage Firm Update Opportunity"
+    participant: "org.example.brokeragefirmnetwork.BrokerageFirms"
+    operation: ALL
+    resource: "org.example.brokeragefirmnetwork.Opportunity"
+    action: ALLOW
+}
+
+rule BrokerageFirmOpportunityWIP {
+    description: "Allow Brokerage Firm Update Oppurtunity WIP"
+    participant: "org.example.brokeragefirmnetwork.BrokerageFirms"
+    operation: ALL
+    resource: "org.example.brokeragefirmnetwork.OpportunityWIP"
+    action: ALLOW
+}
+
+rule BrokerageFirmWon {
+    description: "Allow Brokerage Firm Update WON"
+    participant: "org.example.brokeragefirmnetwork.BrokerageFirms"
+    operation: ALL
+    resource: "org.example.brokeragefirmnetwork.Won"
+    action: ALLOW
+}
+
+rule BrokerageFirmClosure {
+    description: "Allow Brokerage Firm Update Closure"
+    participant: "org.example.brokeragefirmnetwork.BrokerageFirms"
+    operation: ALL
+    resource: "org.example.brokeragefirmnetwork.Closure"
     action: ALLOW
 }
 
@@ -68,10 +97,34 @@ rule LicenseBrokersReadUpdateThemselves {
     action: ALLOW
 }
 
-rule LicenseBrokersReadUpdateOppurtunityWON {
-    description: "Allow License Brokers Read and Update OppurtunityWON asset"
+rule LicenseBrokersUpdateOppurtunity {
+    description: "Allow License Brokers Update Opportunity"
     participant: "org.example.brokeragefirmnetwork.LicenseBrokers"
-    operation: READ,UPDATE
+    operation: ALL
+    resource: "org.example.brokeragefirmnetwork.Opportunity"
+    action: ALLOW
+}
+
+rule LicenseBrokersUpdateOpportunityWIP {
+    description: "Allow License Brokers Update Oppurtunity WIP"
+    participant: "org.example.brokeragefirmnetwork.LicenseBrokers"
+    operation: ALL
+    resource: "org.example.brokeragefirmnetwork.OpportunityWIP"
+    action: ALLOW
+}
+
+rule LicenseBrokersUpdateWon {
+    description: "Allow License Brokers Update WON"
+    participant: "org.example.brokeragefirmnetwork.LicenseBrokers"
+    operation: ALL
+    resource: "org.example.brokeragefirmnetwork.Won"
+    action: ALLOW
+}
+
+rule LicenseBrokersReadOppurtunityWON {
+    description: "Allow License Brokers Read OppurtunityWON asset"
+    participant: "org.example.brokeragefirmnetwork.LicenseBrokers"
+    operation: READ
     resource: "org.example.brokeragefirmnetwork.OpportunityWon"    
     action: ALLOW
 }

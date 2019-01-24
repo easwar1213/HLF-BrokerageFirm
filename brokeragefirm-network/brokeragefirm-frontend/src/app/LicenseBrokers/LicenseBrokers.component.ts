@@ -26,6 +26,8 @@ import 'rxjs/add/operator/toPromise';
 export class LicenseBrokersComponent implements OnInit {
 
   myForm: FormGroup;
+  user: any = {};
+  enableCreateDel: boolean;
 
   private allParticipants;
   private participant;
@@ -60,7 +62,13 @@ export class LicenseBrokersComponent implements OnInit {
   };
 
   ngOnInit(): void {
+    this.getUser();
     this.loadAll();
+  }
+
+  getUser(): void {
+    this.user = JSON.parse(localStorage.getItem('user'));
+    this.enableCreateDel = true ? this.user.type == 'networkadmin' || this.user.type == 'brokeragefirms' : false;
   }
 
   loadAll(): Promise<any> {
