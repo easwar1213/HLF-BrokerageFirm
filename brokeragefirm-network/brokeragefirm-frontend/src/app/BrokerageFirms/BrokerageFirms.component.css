@@ -1,4 +1,4 @@
-/*
+ /*
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -18,7 +18,7 @@
 }
 
 .btn-primary {
-    background: #844AE4;
+    background: #2f8aec;
     border-radius: 4px;
     border: 0px;
     font-size: 14px;
@@ -62,13 +62,29 @@
 .modal-body{
     background: #F4F4F4;
     border-radius: 5px;
+    margin-top:-21px;
 }
 .modal-footer{
-    background: #F4F4F4;
+    background:white;
     border-radius: 5px;
     border-top: 1px solid #f4f4f4
 }
-.form-control{
+.form-group{
+    width:80%;
+    height: 100%;
+    padding-left:5%;
+    
+
+}
+.btn-success{
+    color: #ffffff;
+    background-color: #2f8aec;
+    border-color: #2f8aec;
+    border-radius: 4px;
+    width: 76px;
+    height: 40px;
+}
+/**.form-control{
     color: #393939;
     height: 42px;
     border: 1px solid #ffffff;
@@ -175,3 +191,19 @@ margin-left: -4px;
 ***/
 
 
+.participantmodel {
+    width:45% !important;
+}
+.modal-footer{
+    background-color: transparent !important;
+}
+.labelbox{
+    margin-left:5%;
+}
+.checkbox{
+    padding-left: 5%;
+}
+.title{
+margin-top:-5%;
+
+}

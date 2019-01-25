@@ -1,4 +1,4 @@
-/*
+ /*
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -103,7 +103,7 @@ export class LicenseBrokersComponent implements OnInit {
       });
 
       if (this.user.type == 'brokeragefirms'){
-        this.serviceLicenseBrokers.getparticipant(this.user.id)
+        this.serviceBrokerageFirms.getparticipant(this.user.id)
         .toPromise().then((res) => {
           console.log(res);
           this.brokerageFirms = _.filter(tempList, tl => tl.brokerageId == res.brokerageId);

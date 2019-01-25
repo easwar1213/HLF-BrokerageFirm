@@ -19,11 +19,13 @@
 
 .right-User{
     float:right;
+    color: #fff;
+
 }
 
 .navbar {
     border-radius: 0px;
-    background: #F3F3F3;
+    background: #27be9f;
     border: none;
 }
 
@@ -38,7 +40,7 @@
     letter-spacing: 0.28px;
     padding: 0px;
     margin-left: 0px !important;
-    color: #000;
+    color: #fff;
 }
 
 .navbar-brand:hover {
@@ -64,17 +66,17 @@
 
 .navbar-nav > li:hover {
     background-color: #fff;
-    color: #000;
+    color: #fff;
 }
 
 .navbar-nav > li > a {
-    color: #000;
+    color: #fff;
     padding: 10px;
     font-weight: bold;
 }
 
 .navbar-nav > li > .active:hover > a {
-    color: #6C4CC4 !important;
+    color: #2f8aec !important;
 }
 
 .navbar-nav > li:hover > a {
@@ -83,7 +85,7 @@
 
 .navbar-nav .active > a {
     background-color: #fff;
-    color: #6C4CC4 !important;
+    color: #2f8aec !important;
 }
 
 .dropdown-menu {
