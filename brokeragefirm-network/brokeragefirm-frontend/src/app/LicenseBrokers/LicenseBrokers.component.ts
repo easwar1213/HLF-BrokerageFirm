@@ -62,8 +62,7 @@ export class LicenseBrokersComponent implements OnInit {
     }
     else{
       this.getCurrentBrokerageFirms();
-    }
-    
+    }    
   }
 
   getUser(): void {
@@ -127,7 +126,7 @@ export class LicenseBrokersComponent implements OnInit {
   }
 
   getCurrentBrokerageFirms(): Promise<any> {
-    return this.serviceLicenseBrokers.getparticipant(this.user.id)
+    return this.serviceBrokerageFirms.getparticipant(this.user.id)
     .toPromise()
     .then((result) => { 
       this.brokerageFirms = result;

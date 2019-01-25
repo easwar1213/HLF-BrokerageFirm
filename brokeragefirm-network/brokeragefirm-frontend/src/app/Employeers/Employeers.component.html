@@ -22,9 +22,6 @@
         <form [formGroup]="myForm">
           <div class="modal-body">
   
-  
-            
-  
               
                 <div class="form-group text-left">
                   <label for="employeerId">employeerId</label>
@@ -98,81 +95,6 @@
                 </div>
               
             
-  
-              
-                <div class="form-group text-left">
-                  <label for="brokerageId">brokerageId</label>
-                  
-                    <input formControlName="brokerageId" type="text" class="form-control">
-                  
-                </div>
-              
-            
-  
-              
-                <div class="form-group text-left">
-                  <label for="brokerageName">brokerageName</label>
-                  
-                    <input formControlName="brokerageName" type="text" class="form-control">
-                  
-                </div>
-              
-            
-  
-              
-                <div class="form-group text-left">
-                  <label for="brokerageLicenseNo">brokerageLicenseNo</label>
-                  
-                    <input formControlName="brokerageLicenseNo" type="text" class="form-control">
-                  
-                </div>
-              
-            
-  
-              
-                <div class="form-group text-left">
-                  <label for="brokerageCommunicationDetails">brokerageCommunicationDetails</label>
-                  
-                    <input formControlName="brokerageCommunicationDetails" type="text" class="form-control">
-                  
-                </div>
-              
-            
-  
-              
-                <label for="brokerageStatus">brokerageStatus</label>
-                <div class="checkbox">
-                  
-                    <label>
-                      <input
-                        
-                          formControlName="brokerageStatus"
-                        
-                        name="brokerageStatus"
-                        value="ACTIVE"
-                        type="radio"
-                        
-                      />
-                      ACTIVE
-                    </label>
-                  
-                    <label>
-                      <input
-                        
-                          formControlName="brokerageStatus"
-                        
-                        name="brokerageStatus"
-                        value="NON_ACTIVE"
-                        type="radio"
-                        
-                      />
-                      NON_ACTIVE
-                    </label>
-                  
-                </div>
-              
-            
-  
           </div>
           <div class="modal-footer">
               <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
@@ -272,93 +194,12 @@
                         </label>
                       
                       </div>
-                    </div>
-                  
+                    </div>                
                 
   
               </div>
             
-              <div class="form-group text-left">
-                <label for="brokerageId">brokerageId</label>
-  
                 
-                  <input [ngModel]="brokerageId"formControlName="brokerageId" type="text" class="form-control">
-                
-  
-              </div>
-            
-              <div class="form-group text-left">
-                <label for="brokerageName">brokerageName</label>
-  
-                
-                  <input [ngModel]="brokerageName"formControlName="brokerageName" type="text" class="form-control">
-                
-  
-              </div>
-            
-              <div class="form-group text-left">
-                <label for="brokerageLicenseNo">brokerageLicenseNo</label>
-  
-                
-                  <input [ngModel]="brokerageLicenseNo"formControlName="brokerageLicenseNo" type="text" class="form-control">
-                
-  
-              </div>
-            
-              <div class="form-group text-left">
-                <label for="brokerageCommunicationDetails">brokerageCommunicationDetails</label>
-  
-                
-                  <input [ngModel]="brokerageCommunicationDetails"formControlName="brokerageCommunicationDetails" type="text" class="form-control">
-                
-  
-              </div>
-            
-              <div class="form-group text-left">
-                <label for="brokerageStatus">brokerageStatus</label>
-  
-                
-                  
-                    <div class="row">
-                      <div class="col-xs-12 checkbox">
-                      
-                        <label>
-                          <input
-                            
-                              formControlName="brokerageStatus"
-                              [ngModel]="brokerageStatus"
-                            
-                            name="brokerageStatus"
-                            value="ACTIVE"
-                            type="radio"
-                            
-                          />
-                          ACTIVE
-                        </label>
-                      
-                        <label>
-                          <input
-                            
-                              formControlName="brokerageStatus"
-                              [ngModel]="brokerageStatus"
-                            
-                            name="brokerageStatus"
-                            value="NON_ACTIVE"
-                            type="radio"
-                            
-                          />
-                          NON_ACTIVE
-                        </label>
-                      
-                      </div>
-                    </div>
-                  
-                
-  
-              </div>
-            
-  
-  
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -390,14 +231,6 @@
       </div>
     </div>
   </div>
-  
-  
-  
-  
-  
-  
-  
-  
   
   
   
@@ -437,18 +270,8 @@
                   <th class="info">employerCommunicationDetails</th>
               
                   <th class="info">employeerStatus</th>
-              
-                  <th class="info">brokerageId</th>
-              
-                  <th class="info">brokerageName</th>
-              
-                  <th class="info">brokerageLicenseNo</th>
-              
-                  <th class="info">brokerageCommunicationDetails</th>
-              
-                  <th class="info">brokerageStatus</th>
-              
-                <th class="info-actions">Actions</th>
+
+                  <th class="info-actions">Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -463,17 +286,8 @@
               
                   <td class="participant-properties">{{participant.employerCommunicationDetails}}</td>
               
-                  <td class="participant-properties">{{participant.employeerStatus}}</td>
-              
-                  <td class="participant-properties">{{participant.brokerageId}}</td>
-              
-                  <td class="participant-properties">{{participant.brokerageName}}</td>
-              
-                  <td class="participant-properties">{{participant.brokerageLicenseNo}}</td>
-              
-                  <td class="participant-properties">{{participant.brokerageCommunicationDetails}}</td>
-              
-                  <td class="participant-properties">{{participant.brokerageStatus}}</td>
+                  <td class="participant-properties">{{participant.employeerStatus}}</td>            
+                 
               
               <td>
                 <button (click)="getForm(participant.employeerId);" type="button" class="btn btn-update" data-toggle="modal" data-target="#updateParticipantModal">

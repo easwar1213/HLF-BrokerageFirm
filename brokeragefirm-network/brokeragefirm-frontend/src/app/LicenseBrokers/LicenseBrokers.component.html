@@ -229,16 +229,7 @@
     </div>
   </div>
   
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
+   
   <div class="container">
       <div *ngIf="errorMessage" class="alert alert-danger" role="alert">
           <strong>Error:</strong> {{errorMessage}}
@@ -276,16 +267,6 @@
               
                   <th class="info">brokerStatus</th>
               
-                  <th class="info">brokerageId</th>
-              
-                  <th class="info">brokerageName</th>
-              
-                  <th class="info">brokerageLicenseNo</th>
-              
-                  <th class="info">brokerageCommunicationDetails</th>
-              
-                  <th class="info">brokerageStatus</th>
-              
                 <th class="info-actions">Actions</th>
             </tr>
           </thead>
@@ -302,16 +283,6 @@
                   <td class="participant-properties">{{participant.brokerCommunicationDetails}}</td>
               
                   <td class="participant-properties">{{participant.brokerStatus}}</td>
-              
-                  <td class="participant-properties">{{participant.brokerageId}}</td>
-              
-                  <td class="participant-properties">{{participant.brokerageName}}</td>
-              
-                  <td class="participant-properties">{{participant.brokerageLicenseNo}}</td>
-              
-                  <td class="participant-properties">{{participant.brokerageCommunicationDetails}}</td>
-              
-                  <td class="participant-properties">{{participant.brokerageStatus}}</td>
               
               <td>
                 <button (click)="getForm(participant.brokerId);" type="button" class="btn btn-update" data-toggle="modal" data-target="#updateParticipantModal">

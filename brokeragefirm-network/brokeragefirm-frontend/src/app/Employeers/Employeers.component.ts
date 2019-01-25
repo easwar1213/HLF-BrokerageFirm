@@ -15,13 +15,15 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { EmployeersService } from './Employeers.service';
+import { BrokerageFirmsService } from '../BrokerageFirms/BrokerageFirms.service';
 import 'rxjs/add/operator/toPromise';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'app-employeers',
   templateUrl: './Employeers.component.html',
   styleUrls: ['./Employeers.component.css'],
-  providers: [EmployeersService]
+  providers: [EmployeersService,BrokerageFirmsService]
 })
 export class EmployeersComponent implements OnInit {
 
@@ -31,6 +33,7 @@ export class EmployeersComponent implements OnInit {
 
   private allParticipants;
   private participant;
+  private brokerageFirms;
   private currentId;
   private errorMessage;
 
@@ -39,37 +42,35 @@ export class EmployeersComponent implements OnInit {
   employeerLicenseNo = new FormControl('', Validators.required);
   employerCommunicationDetails = new FormControl('', Validators.required);
   employeerStatus = new FormControl('', Validators.required);
-  brokerageId = new FormControl('', Validators.required);
-  brokerageName = new FormControl('', Validators.required);
-  brokerageLicenseNo = new FormControl('', Validators.required);
-  brokerageCommunicationDetails = new FormControl('', Validators.required);
-  brokerageStatus = new FormControl('', Validators.required);
 
 
-  constructor(public serviceEmployeers: EmployeersService, fb: FormBuilder) {
+  constructor(public serviceEmployeers: EmployeersService,public serviceBrokerageFirms: BrokerageFirmsService, fb: FormBuilder) {
     this.myForm = fb.group({
       employeerId: this.employeerId,
       employeerName: this.employeerName,
       employeerLicenseNo: this.employeerLicenseNo,
       employerCommunicationDetails: this.employerCommunicationDetails,
-      employeerStatus: this.employeerStatus,
-      brokerageId: this.brokerageId,
-      brokerageName: this.brokerageName,
-      brokerageLicenseNo: this.brokerageLicenseNo,
-      brokerageCommunicationDetails: this.brokerageCommunicationDetails,
-      brokerageStatus: this.brokerageStatus
+      employeerStatus: this.employeerStatus
     });
   };
 
   ngOnInit(): void {
     this.getUser();
     this.loadAll();
+    if(this.user.type=="networkadmin"){
+      this.getBrokerageFirms();
+    }
+    else{
+      this.getCurrentBrokerageFirms();
+    }    
   }
 
   getUser(): void {
+    console.log("tempList", this.user)
     this.user = JSON.parse(localStorage.getItem('user'));
     this.enableCreateDel = true ? this.user.type == 'networkadmin' || this.user.type == 'brokeragefirms' : false;
   }
+
 
   loadAll(): Promise<any> {
     const tempList = [];
@@ -91,6 +92,59 @@ export class EmployeersComponent implements OnInit {
       }
     });
   }
+
+  getBrokerageFirms(): Promise<any> {
+    const tempList = [];
+    return this.serviceBrokerageFirms.getAll()
+    .toPromise()
+    .then((result) => {
+      this.errorMessage = null;
+      result.forEach(asset => {
+        tempList.push(asset);
+      });
+
+      if (this.user.type == 'brokeragefirms'){
+        this.serviceEmployeers.getparticipant(this.user.id)
+        .toPromise().then((res) => {
+          console.log(res);
+          this.brokerageFirms = _.filter(tempList, tl => tl.brokerageId == res.brokerageId);
+        })
+      } else {
+        this.brokerageFirms = tempList;
+      }
+      this.brokerageFirms = tempList;
+      console.log("tempList", tempList)
+    })
+    .catch((error) => {
+      if (error === 'Server error') {
+        this.errorMessage = 'Could not connect to REST server. Please check your configuration details';
+      } else if (error === '404 - Not Found') {
+        this.errorMessage = '404 - Could not find API route. Please check your available APIs.';
+      } else {
+        this.errorMessage = error;
+      }
+    });
+  }
+
+  getCurrentBrokerageFirms(): Promise<any> {
+    console.log("hai");
+    return this.serviceBrokerageFirms.getparticipant(this.user.id)
+    .toPromise()
+    .then((result) => { 
+      this.brokerageFirms = result;
+      console.log("tempListCurr", result)
+    })
+    .catch((error) => {
+      if (error === 'Server error') {
+        this.errorMessage = 'Could not connect to REST server. Please check your configuration details';
+      } else if (error === '404 - Not Found') {
+        this.errorMessage = '404 - Could not find API route. Please check your available APIs.';
+      } else {
+        this.errorMessage = error;
+      }
+    });
+  }
+
 
 	/**
    * Event handler for changing the checked state of a checkbox (handles array enumeration values)
@@ -125,11 +179,11 @@ export class EmployeersComponent implements OnInit {
       'employeerLicenseNo': this.employeerLicenseNo.value,
       'employerCommunicationDetails': this.employerCommunicationDetails.value,
       'employeerStatus': this.employeerStatus.value,
-      'brokerageId': this.brokerageId.value,
-      'brokerageName': this.brokerageName.value,
-      'brokerageLicenseNo': this.brokerageLicenseNo.value,
-      'brokerageCommunicationDetails': this.brokerageCommunicationDetails.value,
-      'brokerageStatus': this.brokerageStatus.value
+      'brokerageId': this.brokerageFirms.brokerageId,
+      'brokerageName': this.brokerageFirms.brokerageName,
+      'brokerageLicenseNo': this.brokerageFirms.brokerageLicenseNo,
+      'brokerageCommunicationDetails': this.brokerageFirms.brokerageCommunicationDetails,
+      'brokerageStatus': this.brokerageFirms.brokerageStatus
     };
 
     this.myForm.setValue({
@@ -137,12 +191,7 @@ export class EmployeersComponent implements OnInit {
       'employeerName': null,
       'employeerLicenseNo': null,
       'employerCommunicationDetails': null,
-      'employeerStatus': null,
-      'brokerageId': null,
-      'brokerageName': null,
-      'brokerageLicenseNo': null,
-      'brokerageCommunicationDetails': null,
-      'brokerageStatus': null
+      'employeerStatus': null
     });
 
     return this.serviceEmployeers.addParticipant(this.participant)
@@ -154,12 +203,7 @@ export class EmployeersComponent implements OnInit {
         'employeerName': null,
         'employeerLicenseNo': null,
         'employerCommunicationDetails': null,
-        'employeerStatus': null,
-        'brokerageId': null,
-        'brokerageName': null,
-        'brokerageLicenseNo': null,
-        'brokerageCommunicationDetails': null,
-        'brokerageStatus': null
+        'employeerStatus': null        
       });
       this.loadAll(); 
     })
@@ -180,11 +224,11 @@ export class EmployeersComponent implements OnInit {
       'employeerLicenseNo': this.employeerLicenseNo.value,
       'employerCommunicationDetails': this.employerCommunicationDetails.value,
       'employeerStatus': this.employeerStatus.value,
-      'brokerageId': this.brokerageId.value,
-      'brokerageName': this.brokerageName.value,
-      'brokerageLicenseNo': this.brokerageLicenseNo.value,
-      'brokerageCommunicationDetails': this.brokerageCommunicationDetails.value,
-      'brokerageStatus': this.brokerageStatus.value
+      'brokerageId': this.brokerageFirms.brokerageId,
+      'brokerageName': this.brokerageFirms.brokerageName,
+      'brokerageLicenseNo': this.brokerageFirms.brokerageLicenseNo,
+      'brokerageCommunicationDetails': this.brokerageFirms.brokerageCommunicationDetails,
+      'brokerageStatus': this.brokerageFirms.brokerageStatus  
     };
 
     return this.serviceEmployeers.updateParticipant(form.get('employeerId').value, this.participant)
@@ -239,12 +283,7 @@ export class EmployeersComponent implements OnInit {
         'employeerName': null,
         'employeerLicenseNo': null,
         'employerCommunicationDetails': null,
-        'employeerStatus': null,
-        'brokerageId': null,
-        'brokerageName': null,
-        'brokerageLicenseNo': null,
-        'brokerageCommunicationDetails': null,
-        'brokerageStatus': null
+        'employeerStatus': null        
       };
 
       if (result.employeerId) {
@@ -275,37 +314,7 @@ export class EmployeersComponent implements OnInit {
         formObject.employeerStatus = result.employeerStatus;
       } else {
         formObject.employeerStatus = null;
-      }
-
-      if (result.brokerageId) {
-        formObject.brokerageId = result.brokerageId;
-      } else {
-        formObject.brokerageId = null;
-      }
-
-      if (result.brokerageName) {
-        formObject.brokerageName = result.brokerageName;
-      } else {
-        formObject.brokerageName = null;
-      }
-
-      if (result.brokerageLicenseNo) {
-        formObject.brokerageLicenseNo = result.brokerageLicenseNo;
-      } else {
-        formObject.brokerageLicenseNo = null;
-      }
-
-      if (result.brokerageCommunicationDetails) {
-        formObject.brokerageCommunicationDetails = result.brokerageCommunicationDetails;
-      } else {
-        formObject.brokerageCommunicationDetails = null;
-      }
-
-      if (result.brokerageStatus) {
-        formObject.brokerageStatus = result.brokerageStatus;
-      } else {
-        formObject.brokerageStatus = null;
-      }
+      }      
 
       this.myForm.setValue(formObject);
     })
@@ -327,12 +336,7 @@ export class EmployeersComponent implements OnInit {
       'employeerName': null,
       'employeerLicenseNo': null,
       'employerCommunicationDetails': null,
-      'employeerStatus': null,
-      'brokerageId': null,
-      'brokerageName': null,
-      'brokerageLicenseNo': null,
-      'brokerageCommunicationDetails': null,
-      'brokerageStatus': null
+      'employeerStatus': null      
     });
   }
 }
